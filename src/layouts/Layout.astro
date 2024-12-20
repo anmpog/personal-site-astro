@@ -17,7 +17,9 @@ import Navigation from '../components/Navigation.astro'
   </head>
   <body>
     <div class='site-content container grid grid-cols-12 gap-6'>
-      <section class='center-content'>
+      <section
+        class='center-content col-start-1 col-end-13 px-3 md:px-0 lg:col-start-2 lg:col-end-12 xl:col-start-4 xl:col-end-10'
+      >
         <Navigation />
         <slot />
       </section>
@@ -38,9 +40,5 @@ import Navigation from '../components/Navigation.astro'
 
   .site-content {
     flex: 1;
-  }
-
-  .center-content {
-    grid-column: 4/10;
   }
 </style>
