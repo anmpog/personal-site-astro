@@ -1,0 +1,15 @@
+---
+import Logo from './Logo.astro'
+import NavLink from './NavLInk.astro'
+---
+
+<nav class='flex justify-between items-center py-4'>
+  <Logo />
+  <ul>
+    <li>
+      <!-- <a href={'/'}>Home</a> -->
+      <NavLink linkName={'Home'} to={'/'} />
+      <NavLink linkName={'Blog'} to={'/blog'} />
+    </li>
+  </ul>
+</nav>

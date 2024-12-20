@@ -1,0 +1,25 @@
+---
+const { linkName, to, currentPath } = Astro.props
+const pathName = new URL(Astro.request.url).pathname
+---
+
+<a href={to} class={pathName === to ? 'active' : null}>{linkName}</a>
+
+<style>
+  a {
+    padding: theme('space.2');
+  }
+  a::before {
+    content: '\00B7';
+    margin-right: 3px;
+    visibility: hidden;
+  }
+
+  .active {
+    color: theme('colors.primary');
+    text-decoration: none;
+    &:before {
+      visibility: visible;
+    }
+  }
+</style>
