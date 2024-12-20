@@ -2,6 +2,8 @@
 import '@fontsource/calistoga'
 import '@fontsource/merriweather'
 import '@fontsource/open-sans'
+
+import Navigation from '../components/Navigation.astro'
 ---
 
 <!doctype html>
@@ -14,8 +16,11 @@ import '@fontsource/open-sans'
     <title>Astro Basics</title>
   </head>
   <body>
-    <div class='site-content'>
-      <slot />
+    <div class='site-content container grid grid-cols-12 gap-6'>
+      <section class='center-content'>
+        <Navigation />
+        <slot />
+      </section>
     </div>
   </body>
 </html>
@@ -33,5 +38,9 @@ import '@fontsource/open-sans'
 
   .site-content {
     flex: 1;
+  }
+
+  .center-content {
+    grid-column: 4/10;
   }
 </style>
