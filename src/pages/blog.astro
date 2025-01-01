@@ -5,14 +5,18 @@ const allPosts = await getCollection('blog')
 ---
 
 <Layout>
-  <h1>Bloggy</h1>
+  <h1>Blog</h1>
   {
-    allPosts.map((post: any) => {
-      return (
-        <div>
-          <a href={`/blog/${post.id}`}>{post.data.title}</a>
-        </div>
-      )
-    })
+    allPosts.length > 0 ? (
+      allPosts.map((post: any) => {
+        return (
+          <div>
+            <a href={`/blog/${post.id}`}>{post.data.title}</a>
+          </div>
+        )
+      })
+    ) : (
+      <h2>There doesn't appear to be any blog posts yet.</h2>
+    )
   }
 </Layout>
