@@ -1,9 +1,10 @@
 ---
-const { linkName, to, currentPath } = Astro.props
-const pathName = new URL(Astro.request.url).pathname
+const { linkName, to, currentParentPath } = Astro.props
 ---
 
-<a href={to} class={pathName === to ? 'active' : null}>{linkName}</a>
+<!-- Active link styling by comparing currentParentPath with `to` with slashes stripped out -->
+<a href={to} class={currentParentPath === to.slice(1) ? 'active' : null}>{linkName}</a
+>
 
 <style>
   a {

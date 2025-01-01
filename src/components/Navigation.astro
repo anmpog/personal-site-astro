@@ -1,6 +1,11 @@
 ---
 import Logo from './Logo.astro'
-import NavLink from './NavLInk.astro'
+import NavLink from './NavLink.astro'
+const pathName = new URL(Astro.request.url).pathname
+
+// Current path is really more of a "parent" path that I can use to keep link styling when navigating to a sub-path
+// This is useful for making the "blog" nav link have styling when you're looking at blog posts
+const currentParentPath = pathName.split('/')[1]
 ---
 
 <nav class='flex justify-between items-center py-4'>
@@ -8,8 +13,8 @@ import NavLink from './NavLInk.astro'
   <ul>
     <li>
       <!-- <a href={'/'}>Home</a> -->
-      <NavLink linkName={'Home'} to={'/'} />
-      <NavLink linkName={'Blog'} to={'/blog'} />
+      <NavLink linkName={'Home'} to={'/'} currentParentPath={currentParentPath} />
+      <NavLink linkName={'Blog'} to={'/blog'} currentParentPath={currentParentPath} />
     </li>
   </ul>
 </nav>
