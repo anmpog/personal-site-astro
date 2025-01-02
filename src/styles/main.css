@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  p {
+    @apply text-sm;
+  }
+
+  @screen md {
+    p {
+      @apply text-base;
+    }
+  }
+
+  @screen lg {
+    p {
+      @apply text-lg;
+    }
+  }
+}

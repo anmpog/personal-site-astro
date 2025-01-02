@@ -3,8 +3,9 @@ const { linkName, to, currentParentPath } = Astro.props
 ---
 
 <!-- Active link styling by comparing currentParentPath with `to` with slashes stripped out -->
-<a href={to} class={currentParentPath === to.slice(1) ? 'active' : null}>{linkName}</a
->
+<a href={to} class={currentParentPath === to.slice(1) ? 'active' : null}>
+  {linkName}
+</a>
 
 <style>
   a {
