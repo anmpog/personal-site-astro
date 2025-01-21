@@ -9,11 +9,10 @@ const { linkName, to, currentParentPath } = Astro.props
 
 <style>
   a {
-    padding: theme('space.2');
+    padding: theme('space.2') theme('space.1');
   }
   a::before {
     content: '\00B7';
-    margin-right: 3px;
     visibility: hidden;
   }
 

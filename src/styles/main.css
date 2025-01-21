@@ -4,18 +4,30 @@
 
 @layer base {
   p {
-    @apply text-sm;
+    color: red;
+  }
+
+  @screen sm {
+    p {
+      color: purple;
+    }
   }
 
   @screen md {
     p {
-      @apply text-base;
+      color: blue;
     }
   }
 
   @screen lg {
     p {
-      @apply text-lg;
+      color: green;
+    }
+  }
+
+  @screen xl {
+    p {
+      color: royalblue;
     }
   }
 }
