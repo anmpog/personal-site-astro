@@ -1,0 +1,8 @@
+---
+const { sectionTitle } = Astro.props
+---
+
+<section>
+  {sectionTitle ? <h2>{sectionTitle}</h2> : null}
+  <slot />
+</section>

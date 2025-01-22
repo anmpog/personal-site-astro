@@ -1,5 +1,5 @@
 // Import the glob loader
-import { glob } from 'astro/loaders'
+import { glob, file } from 'astro/loaders'
 // Import utilities from `astro:content`
 import { z, defineCollection } from 'astro:content'
 // Define a `loader` and `schema` for each collection
@@ -13,5 +13,19 @@ const blog = defineCollection({
     tags: z.array(z.string()),
   }),
 })
-// Export a single `collections` object to register your collection(s)
-export const collections = { blog }
+
+const experience = defineCollection({
+  loader: file('src/data/work-experience.json'),
+  schema: z.object({
+    id: z.number(),
+    company: z.string(),
+    siteUrl: z.string(),
+    jobTitle: z.string(),
+    startDate: z.string(),
+    endDate: z.string(),
+    description: z.string(),
+    skills: z.array(z.string()),
+  }),
+})
+
+export const collections = { blog, experience }

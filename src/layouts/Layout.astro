@@ -18,12 +18,28 @@ import Navigation from '../components/Navigation.astro'
   </head>
   <body class="m-0 flex h-full min-h-screen w-full flex-col">
     <main
-      class="site-content mx-auto grid w-full max-w-screen-lg grow grid-cols-12 gap-3"
+      class="site-content mx-auto grid w-full max-w-screen-lg grow grid-cols-12 gap-4"
     >
       <section class="col-start-1 col-end-13 px-3 md:px-0">
         <Navigation />
         <slot />
       </section>
+      <footer
+        class="prose col-start-1 col-end-13 px-3 py-6 text-center text-sm md:px-0"
+      >
+        Made with:
+        <a
+          href="https://astro.build/"
+          target="_blank"
+          class="font-bold underline">Astro</a
+        >
+        and
+        <a
+          href="https://tailwindcss.com/"
+          target="_blank"
+          class="font-bold underline">TailwindCSS</a
+        >
+      </footer>
     </main>
   </body>
 </html>

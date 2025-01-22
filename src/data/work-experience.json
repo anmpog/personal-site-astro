@@ -1,0 +1,41 @@
+[
+  {
+    "id": 1,
+    "company": "Watchtower Solutions",
+    "siteUrl": "https://www.yourwatchtower.com/",
+    "jobTitle": "Software Engineer",
+    "startDate": "December 2021",
+    "endDate": "April 2023",
+    "description": "Worked as a member of a small team that designed and developed new features in a rapid product development cycle with React/Typescript. Worked in React/Typescript to build new features for public safety data collection and dissemination tools.",
+    "skills": [
+      "JavaScript",
+      "React",
+      "TypeScript",
+      "Theme UI",
+      "Apollo GQL",
+      "Prisma ORM",
+      "GitLab",
+      "Contentful",
+      "GatsbyJS"
+    ]
+  },
+  {
+    "id": 2,
+    "company": "Novvum Consulting",
+    "siteUrl": "https://www.novvum.io/",
+    "jobTitle": "Junior Front End Engineer",
+    "startDate": "June 2021",
+    "endDate": "December 2021",
+    "description": "Worked in GatsbyJS and Contentful CMS to add content and features to sites for clients. Worked independently with clients as necessary to implement features and content changes Dramatically improved site performance and UX in several sites by implementing CSS solutions in place of existing JavaScript-based animations.",
+    "skills": [
+      "JavaScript",
+      "React",
+      "GatsbyJS",
+      "Emotion",
+      "Github",
+      "Contentful",
+      "Tailwind CSS",
+      "Theme UI"
+    ]
+  }
+]
