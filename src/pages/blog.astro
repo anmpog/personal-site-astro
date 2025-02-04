@@ -1,22 +1,38 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
+import { sortByDate } from '../utils/sortByDate'
 const allPosts = await getCollection('blog')
 ---
 
 <Layout>
-  <h1>Blog</h1>
   {
     allPosts.length > 0 ? (
-      allPosts.map((post: any) => {
-        return (
-          <div>
-            <a href={`/blog/${post.id}`}>{post.data.title}</a>
-          </div>
-        )
-      })
+      <ul class='m-0 flex list-none flex-col gap-8 p-0'>
+        {allPosts.sort(sortByDate).map((post: any) => {
+          const { title, pubDate, description, tags } = post.data
+          return (
+            <a href={`/blog/${post.id}`} class='no-underline'>
+              <li class='m-0 p-0'>
+                <h3 class='mb-2 mt-0'>{title}</h3>
+                <time class='italic' datetime={pubDate.toISOString()}>
+                  {pubDate.toDateString()}
+                </time>
+                <p class='font-normal'>{description}</p>
+                <ul class='flex flex-wrap gap-1 p-0'>
+                  {tags.map((tag: string) => (
+                    <li class='m-0 list-none rounded-xl border px-2 capitalize'>
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            </a>
+          )
+        })}
+      </ul>
     ) : (
-      <h2>There doesn't appear to be any blog posts yet.</h2>
+      <h2>There are no posts</h2>
     )
   }
 </Layout>
