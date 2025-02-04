@@ -1,46 +1,46 @@
 ---
-const { sectionTitle } = Astro.props
 import { Image } from 'astro:assets'
 import profilePic from '../Images/profile-pic.jpeg'
 import Icon from '../components/Icon.astro'
+import ContentGroup from './ContentGroup.astro'
 ---
 
-<div class="prose prose-sm prose-headings:font-heading">
-  <div class="flex flex-row gap-4">
+<ContentGroup>
+  <div class='flex flex-row gap-4'>
     <Image
       src={profilePic}
-      alt="Image of Anthony standing in front of sunflowers smiling."
-      class="max-h-40 w-1/2 max-w-40 rounded-full"
+      alt='Image of Anthony standing in front of sunflowers smiling.'
+      class='m-0 max-h-40 w-1/2 max-w-40 rounded-full'
     />
-    <div class="flex w-1/2 flex-col justify-center gap-2">
-      <h2 class="m-0 text-center">Anthony Pogliano</h2>
-      <p class="m-0 text-center">Full-Stack Web Developer</p>
-      <div class="flex flex-row justify-around">
+    <div class='flex w-full flex-col items-center justify-center gap-2'>
+      <h2 class='m-0 text-center'>Anthony Pogliano</h2>
+      <p class='m-0 text-center'>Full-Stack Web Developer</p>
+      <div class='flex w-full flex-row justify-around md:w-1/2'>
         <a
-          href="https://github.com/anmpog"
-          target="_blank"
-          class="flex justify-center rounded-full p-1 align-middle"
+          href='https://github.com/anmpog'
+          target='_blank'
+          class='flex justify-center rounded-full p-1 align-middle'
           ><Icon
-            name="Github"
-            class="w-6 fill-slate-800 hover:fill-slate-600"
+            name='Github'
+            class='w-6 fill-slate-800 hover:fill-slate-600'
           /></a
         >
         <a
-          href="https://github.com/anmpog"
-          target="_blank"
-          class="flex justify-center rounded-full p-1 align-middle"
+          href='https://github.com/anmpog'
+          target='_blank'
+          class='flex justify-center rounded-full p-1 align-middle'
           ><Icon
-            name="GitLab"
-            class="w-6 fill-slate-800 hover:fill-slate-600"
+            name='GitLab'
+            class='w-6 fill-slate-800 hover:fill-slate-600'
           /></a
         >
         <a
-          href="https://github.com/anmpog"
-          target="_blank"
-          class="flex justify-center rounded-full p-1 align-middle"
+          href='https://github.com/anmpog'
+          target='_blank'
+          class='flex justify-center rounded-full p-1 align-middle'
           ><Icon
-            name="LinkedIn"
-            class="w-6 fill-slate-800 hover:fill-slate-600"
+            name='LinkedIn'
+            class='w-6 fill-slate-800 hover:fill-slate-600'
           />
         </a>
       </div>
@@ -56,4 +56,4 @@ import Icon from '../components/Icon.astro'
       sites and applications.
     </p>
   </article>
-</div>
+</ContentGroup>

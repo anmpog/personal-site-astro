@@ -4,42 +4,31 @@ import '@fontsource/merriweather'
 import '@fontsource/open-sans'
 import '../styles/main.css'
 
+import Prose from '../components/Prose.astro'
 import Navigation from '../components/Navigation.astro'
+import Footer from '../components/Footer.astro'
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang='en'>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <meta charset='UTF-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <meta name='generator' content={Astro.generator} />
     <title>Anthony Site</title>
   </head>
-  <body class="m-0 flex h-full min-h-screen w-full flex-col">
-    <main
-      class="site-content mx-auto grid w-full max-w-screen-lg grow grid-cols-12 gap-4"
-    >
-      <section class="col-start-1 col-end-13 px-3 md:px-0">
-        <Navigation />
-        <slot />
-      </section>
-      <footer
-        class="prose col-start-1 col-end-13 px-3 py-6 text-center text-sm md:px-0"
-      >
-        Made with:
-        <a
-          href="https://astro.build/"
-          target="_blank"
-          class="font-bold underline">Astro</a
-        >
-        and
-        <a
-          href="https://tailwindcss.com/"
-          target="_blank"
-          class="font-bold underline">TailwindCSS</a
-        >
-      </footer>
-    </main>
+  <body class='flex min-h-screen w-full flex-col'>
+    <div class='mx-auto flex w-full max-w-screen-lg grow flex-col'>
+      <Navigation />
+      <main class='grid w-full grow grid-cols-12 gap-4'>
+        <div class='col-start-1 col-end-13 px-4 md:px-0'>
+          <Prose>
+            <slot />
+          </Prose>
+        </div>
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>

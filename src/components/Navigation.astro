@@ -8,22 +8,24 @@ const pathName = new URL(Astro.request.url).pathname
 const currentParentPath = pathName.split('/')[1]
 ---
 
-<nav class="flex items-center justify-between py-4">
-  <Logo />
-  <ul class="flex gap-2">
-    <li>
-      <NavLink
-        linkName={'Home'}
-        to={'/'}
-        currentParentPath={currentParentPath}
-      />
-    </li>
-    <li>
-      <NavLink
-        linkName={'Blog'}
-        to={'/blog'}
-        currentParentPath={currentParentPath}
-      />
-    </li>
-  </ul>
-</nav>
+<header>
+  <nav class='flex items-center justify-between px-4 py-4 md:px-0'>
+    <Logo />
+    <ul class='flex gap-2'>
+      <li>
+        <NavLink
+          linkName={'Home'}
+          to={'/'}
+          currentParentPath={currentParentPath}
+        />
+      </li>
+      <li>
+        <NavLink
+          linkName={'Blog'}
+          to={'/blog'}
+          currentParentPath={currentParentPath}
+        />
+      </li>
+    </ul>
+  </nav>
+</header>

@@ -1,15 +1,12 @@
 ---
 import { getCollection } from 'astro:content'
-import type { CollectionEntry } from 'astro:content'
 import ContentGroup from './ContentGroup.astro'
 const experience = await getCollection('experience')
-
-type ExperienceItem = CollectionEntry<'experience'>
 ---
 
 <ContentGroup>
   {
-    experience.map((experienceItem: ExperienceItem) => {
+    experience.map((experienceItem) => {
       const {
         company,
         siteUrl,
@@ -20,20 +17,20 @@ type ExperienceItem = CollectionEntry<'experience'>
         skills,
       } = experienceItem.data
       return (
-        <div class="prose prose-sm mt-8 flex flex-col gap-4 prose-headings:font-heading">
-          <a href={siteUrl} class="no-underline" target="_blank">
-            <h3 class="mb-3 mt-0">{company}</h3>
-            <div class="flex flex-col">
-              <p class="mb-1 mt-0 text-base font-bold">{jobTitle}</p>
-              <time class="italic">
+        <div class='mt-8 flex flex-col'>
+          <a href={siteUrl} class='no-underline' target='_blank'>
+            <h3 class='mb-2 mt-0'>{company}</h3>
+            <div class='flex flex-col'>
+              <p class='mb-1 mt-0 text-base font-bold'>{jobTitle}</p>
+              <time class='italic'>
                 {startDate} – {endDate ? endDate : null}
               </time>
             </div>
-            <p>{description}</p>
-            <ul class="flex flex-wrap gap-1 p-0">
+            <p class='font-normal'>{description}</p>
+            <ul class='flex flex-wrap gap-1 p-0 m-0'>
               {skills.map((skill: any) => {
                 return (
-                  <li class="m-0 inline-block w-auto list-none rounded-xl border px-2">
+                  <li class='m-0 list-none rounded-xl border px-2 capitalize'>
                     {skill}
                   </li>
                 )

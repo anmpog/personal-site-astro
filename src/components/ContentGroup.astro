@@ -6,3 +6,9 @@ const { sectionTitle } = Astro.props
   {sectionTitle ? <h2>{sectionTitle}</h2> : null}
   <slot />
 </section>
+
+<style>
+  section + section {
+    margin-top: 3em;
+  }
+</style>
