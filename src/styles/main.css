@@ -3,31 +3,143 @@
 @tailwind utilities;
 
 @layer base {
-  p {
-    color: red;
+  * {
+    color: theme(colors.text);
+  }
+  p,
+  li {
+    @apply text-sm;
+    @apply my-3.5;
+    @apply font-body;
+    word-break: break-word;
+    hyphens: auto;
+  }
+
+  p,
+  ul,
+  li,
+  h1,
+  h2,
+  h3,
+  h4 {
+    max-width: 65ch;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-heading;
+  }
+
+  h1 {
+    @apply text-3xl;
+    @apply mt-0;
+    @apply mb-3.5;
+  }
+
+  h2 {
+    @apply text-2xl;
+    @apply mt-7;
+    @apply mb-3;
+  }
+
+  h3 {
+    @apply text-xl;
+    @apply mt-6;
+    @apply mb-2.5;
+  }
+
+  h4 {
+    @apply text-lg;
+    @apply mt-5;
+    @apply mb-2;
   }
 
   @screen sm {
-    p {
-      color: purple;
+    p,
+    li {
+      @apply text-base;
+      @apply my-4;
+    }
+
+    p,
+    ul,
+    li,
+    h1,
+    h2,
+    h3,
+    h4 {
+      max-width: 70ch;
+    }
+
+    h1 {
+      @apply text-4xl;
+      @apply mt-0;
+      @apply mb-4;
+    }
+
+    h2 {
+      @apply text-3xl;
+      @apply mt-8;
+      @apply mb-3.5;
+    }
+
+    h3 {
+      @apply text-2xl;
+      @apply mt-7;
+      @apply mb-3;
+    }
+
+    h4 {
+      @apply text-xl;
+      @apply mt-6;
+      @apply mb-2.5;
     }
   }
 
   @screen md {
-    p {
-      color: blue;
+    p,
+    li {
+      @apply text-lg;
+      @apply my-5;
+      @apply font-body;
+      word-break: break-word;
+      hyphens: auto;
     }
-  }
 
-  @screen lg {
-    p {
-      color: green;
+    p,
+    ul,
+    li,
+    h1,
+    h2,
+    h3,
+    h4 {
+      max-width: 75ch;
     }
-  }
 
-  @screen xl {
-    p {
-      color: royalblue;
+    h1 {
+      @apply text-5xl;
+      @apply mt-0;
+      @apply mb-5;
+    }
+
+    h2 {
+      @apply text-4xl;
+      @apply mt-9;
+      @apply mb-4;
+    }
+
+    h3 {
+      @apply text-3xl;
+      @apply mt-8;
+      @apply mb-3.5;
+    }
+
+    h4 {
+      @apply text-2xl;
+      @apply mt-7;
+      @apply mb-3;
     }
   }
 }

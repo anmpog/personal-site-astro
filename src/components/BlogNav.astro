@@ -1,0 +1,36 @@
+---
+const { previousPostData, nextPostData } = Astro.props
+---
+
+<div class='mt-auto flex flex-col gap-2'>
+  {
+    previousPostData ? (
+      <a
+        href={`/blog/${previousPostData.id}`}
+        class='flex flex-col rounded-md px-4 py-2 no-underline outline outline-1 outline-black'
+      >
+        <span class='self-start font-bold'>← Last Post</span>
+        <span class='italic'>{previousPostData.data.title}</span>
+      </a>
+    ) : (
+      <p class='m-0 rounded-md px-4 py-2 outline outline-1 outline-black'>
+        No previous posts!
+      </p>
+    )
+  }
+  {
+    nextPostData ? (
+      <a
+        href={`/blog/${nextPostData.id}`}
+        class='flex flex-col rounded-md px-4 py-2 no-underline outline outline-1 outline-black'
+      >
+        <span class='self-end font-bold'>Next Post →</span>
+        <span class='self-end italic'>{nextPostData.data.title}</span>
+      </a>
+    ) : (
+      <p class='m-0 rounded-md px-4 py-2 outline outline-1 outline-black'>
+        No next post!
+      </p>
+    )
+  }
+</div>

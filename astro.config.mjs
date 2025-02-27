@@ -7,4 +7,9 @@ import preact from '@astrojs/preact'
 export default defineConfig({
   integrations: [tailwind(), preact({ compat: true })],
   devToolbar: { enabled: false },
+  markdown: {
+    shikiConfig: {
+      theme: 'dracula',
+    },
+  },
 })
