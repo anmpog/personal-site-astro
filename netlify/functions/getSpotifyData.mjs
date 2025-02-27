@@ -1,5 +1,5 @@
 import axios from 'axios'
-import getTopTracks from './utils/getTopTracks.mjs'
+import getRecentTracks from './utils/getRecentTracks.mjs'
 import getTopArtists from './utils/getTopArtists.mjs'
 
 // Options for POST request for refreshing auth token
@@ -41,11 +41,11 @@ export default async function getSpotifyData(req) {
       const { data } = await axios.request(refreshTokenOptions)
       accessToken = data.access_token
 
-      const topTracksResponseData = await getTopTracks(accessToken)
-      const topArtistsResponseData = await getTopArtists(accessToken)
+      const getRecentTracksResponse = await getRecentTracks(accessToken)
+      const getTopArtistsResponse = await getTopArtists(accessToken)
 
       const successResponse = new Response(
-        JSON.stringify({ topTracksResponseData, topArtistsResponseData }),
+        JSON.stringify({ getRecentTracksResponse, getTopArtistsResponse }),
         {
           status: 200,
         }

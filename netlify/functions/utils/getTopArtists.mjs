@@ -11,7 +11,7 @@ export default async function getTopArtists(accessToken) {
       }
     )
     .then(({ data }) => {
-      const artistsList = data.items.map(artist => {
+      const artistsList = data.items.map((artist) => {
         return {
           artistName: artist.name,
           artistImages: artist.images,
@@ -24,10 +24,10 @@ export default async function getTopArtists(accessToken) {
         success: true,
       }
     })
-    .catch(error => {
+    .catch((error) => {
       return {
         data: null,
-        message: error.message,
+        message: `There was an error fetching top artists: ${error.message}`,
         success: false,
       }
     })
