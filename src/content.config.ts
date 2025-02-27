@@ -14,8 +14,10 @@ const blog = defineCollection({
   }),
 })
 
-const experience = defineCollection({
-  loader: file('src/data/work-experience.json'),
+const workExperience = defineCollection({
+  loader: file('src/data/site-data.json', {
+    parser: (text) => JSON.parse(text).workExperience,
+  }),
   schema: z.object({
     id: z.number(),
     company: z.string(),
@@ -28,4 +30,4 @@ const experience = defineCollection({
   }),
 })
 
-export const collections = { blog, experience }
+export const collections = { blog, workExperience }
