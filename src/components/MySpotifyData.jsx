@@ -1,61 +1,84 @@
 import { useState, useEffect } from 'preact/hooks'
+import SpotifyLogo from '../assets/svg/SpotifyLogo'
 
 const myHeaders = new Headers({
   'Content-Type': 'application/json',
   Accept: 'application/json',
 })
 
-const TopTrackSkeleton = () => {
+const TopArtistsSkeleton = () => {
   return (
-    <>
-      <h3>Top Artists</h3>
-      <p>
-        The six artists I've been listening to the most over the past 6 months
-      </p>
-      <div class='grid grid-cols-2 gap-4'>
-        {[...Array(6)].map((_, i) => (
+    <div class='grid grid-cols-2 gap-4 sm:grid-cols-3'>
+      {[...Array(6)].map((_, i) => (
+        <div
+          key={i}
+          class='flex animate-pulse flex-col overflow-hidden rounded-sm bg-slate-300 no-underline outline outline-1 outline-slate-400 md:rounded'
+        >
+          <div class='m-0 aspect-square h-auto w-full bg-slate-400 object-cover' />
+          <p class='h-5 w-4/5 self-center rounded-xl bg-slate-400 sm:h-7'>
+            &nbsp;
+          </p>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+const RecentTracksSkeleton = () => {
+  return (
+    <div class='grid auto-rows-auto grid-cols-1 gap-4 sm:grid-cols-2'>
+      {[...Array(10)].map((_, i) => {
+        return (
           <div
             key={i}
-            class='flex animate-pulse flex-col overflow-hidden rounded-md bg-slate-300 no-underline outline outline-1 outline-slate-400'
+            class='background flex animate-pulse flex-row gap-2 overflow-hidden rounded-sm bg-slate-300 no-underline outline outline-1 outline-slate-400 md:rounded'
           >
-            <div class='m-0 aspect-square h-auto w-full bg-slate-400 object-cover' />
-            <p class='h-6 w-4/5 self-center rounded-xl bg-slate-400 text-base font-bold'>
-              &nbsp;
-            </p>
-          </div>
-        ))}
-      </div>
-      <h3>Recent Tracks</h3>
-      <p>My ten(ish) most recently listened-to tracks</p>
-      <div class='grid auto-rows-auto grid-cols-1 gap-4'>
-        {[...Array(8)].map((_, i) => {
-          return (
-            <div
-              key={i}
-              class='background flex animate-pulse flex-row gap-2 overflow-hidden rounded-md bg-slate-300 no-underline outline outline-1 outline-slate-400'
-            >
-              <div class='m-0 aspect-square h-28 w-28 bg-slate-400' />
-              <div class='flex w-full flex-col justify-center gap-2'>
-                <span class='m-0 h-6 w-40 rounded-xl bg-slate-400 text-base'>
-                  &nbsp;
-                </span>
-                <span class='m-0 h-4 w-44 rounded-xl bg-slate-400 text-base'>
-                  &nbsp;
-                </span>
-              </div>
+            <div class='m-0 aspect-square h-28 w-28 bg-slate-400' />
+            <div class='flex w-full flex-col justify-center gap-2'>
+              <span class='m-0 h-6 w-40 rounded-xl bg-slate-400 text-base sm:h-7 sm:w-32'>
+                &nbsp;
+              </span>
+              <span class='m-0 h-5 w-44 rounded-xl bg-slate-400 text-base sm:h-6 sm:w-36'>
+                &nbsp;
+              </span>
             </div>
-          )
-        })}
-      </div>
-    </>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+const SpotifyErrorMessage = ({ message }) => {
+  return (
+    <div class='flex h-28 items-center gap-2 overflow-hidden rounded-sm bg-red-200 p-2 align-middle italic outline outline-1 outline-red-400 md:rounded'>
+      <span class='iconify inline-block text-3xl ion--alert-circle-outline'></span>
+      <p class='m-0'>{message}</p>
+    </div>
+  )
+}
+
+const ClientErrorMessage = ({ message }) => {
+  return (
+    <div class='flex flex-col gap-3 overflow-hidden rounded-sm bg-red-200 px-2 py-4 outline outline-1 outline-red-400 md:rounded'>
+      <h4 class='m-0 italic'>
+        There was supposed to be some data here, but something went wrong. Yell
+        at Anthony for breaking things.
+      </h4>
+      <p class='m-0'>Hint: {message}</p>
+    </div>
   )
 }
 
 const MySpotifyData = () => {
-  const [topTracksResponse, setTopTracksResponse] = useState(null)
-  const [topArtistsResponse, setTopArtistsResponse] = useState(null)
+  const [recentTracksResponseData, setRecentTracksResponseData] = useState(null)
+  const [topArtistsResponseData, setTopArtistsResponseData] = useState(null)
   const [spotifyDataLoading, setSpotifyDataLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [spotifyError, setSpotifyError] = useState({
+    getRecentTracksError: null,
+    getTopArtistsError: null,
+  })
+  const [clientError, setClientError] = useState(null)
 
   useEffect(() => {
     setSpotifyDataLoading(true)
@@ -64,72 +87,116 @@ const MySpotifyData = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setTopTracksResponse(data.topTracksResponseData)
-        setTopArtistsResponse(data.topArtistsResponseData)
+        const { getTopArtistsResponse, getRecentTracksResponse } = data
+
+        if (getRecentTracksResponse.success) {
+          setRecentTracksResponseData(getRecentTracksResponse.data)
+        } else if (!getRecentTracksResponse.success) {
+          setSpotifyError({
+            ...spotifyError,
+            getRecentTracksError: getRecentTracksResponse.message,
+          })
+        }
+
+        if (getTopArtistsResponse.success) {
+          setTopArtistsResponseData(getTopArtistsResponse.data)
+        } else if (!getTopArtistsResponse.success) {
+          setSpotifyError({
+            ...spotifyError,
+            getTopArtistsError: getTopArtistsResponse.message,
+          })
+        }
       })
-      .catch(() => setError('There was an error reaching Spotify.'))
+      .catch((error) => {
+        console.error(error.message)
+        setClientError('Client Error')
+      })
       .finally(() => {
-        console.log(topArtistsResponse, topTracksResponse)
         setSpotifyDataLoading(false)
       })
   }, [])
 
-  if (spotifyDataLoading) {
-    return <TopTrackSkeleton />
+  if (clientError) {
+    return <ClientErrorMessage message={clientError} />
   }
 
-  if (error) {
-    return (
-      <div>
-        <p>{error}</p>
-      </div>
-    )
-  }
   return (
-    <>
-      <h3>Top Artists</h3>
-      <p>
-        The six artists I've been listening to the most over the past 6 months
-      </p>
-      {topArtistsResponse?.success ? (
-        <>
-          <div class='grid grid-cols-2 gap-4'>
-            {topArtistsResponse.data.map((artist) => (
+    <div class='flex flex-col gap-6'>
+      <div>
+        <div class='mb-2 flex h-28 flex-col justify-end bg-slate-900 px-1 py-2 outline outline-1 outline-slate-900'>
+          <h3 class='my-0 flex items-center gap-2 text-neutral-100'>
+            Top Artists
+            <div class='inline-block h-6 w-6 text-neutral-100'>
+              <SpotifyLogo />
+            </div>
+          </h3>
+          <p class='my-0 text-neutral-100'>
+            The six artists I've been listening to the most over the past 6
+            months:
+          </p>
+        </div>
+
+        {(!topArtistsResponseData && !spotifyError.getTopArtistsError) ||
+        spotifyDataLoading ? (
+          <TopArtistsSkeleton />
+        ) : null}
+
+        {topArtistsResponseData ? (
+          <div class='md: grid grid-cols-2 gap-4 sm:grid-cols-3'>
+            {topArtistsResponseData.map((artist) => (
               <a
                 key={artist.artistName}
                 href={artist.artistLinks.spotify}
                 rel='noopener noreferrer'
                 target='_blank'
-                class='overflow-hidden rounded-md no-underline outline outline-1'
+                class='overflow-hidden rounded-sm no-underline outline outline-1 outline-slate-900 md:rounded'
               >
                 <img
                   src={artist.artistImages[1].url}
                   alt={`${artist.artistName} Artwork`}
                   class='m-0 aspect-square h-auto w-full object-cover'
                 />
-                <p class='truncate px-1 text-center text-base font-bold'>
+                <p class='truncate px-1 text-center text-sm font-bold sm:text-lg'>
                   {artist.artistName}
                 </p>
               </a>
             ))}
           </div>
-        </>
-      ) : (
-        <p>There was a problem fetching top artists.</p>
-      )}
-      <h3>Recent Tracks</h3>
-      <p>My ten(ish) most recently listened-to tracks</p>
-      {topTracksResponse?.success ? (
-        <>
-          <div class='grid auto-rows-auto grid-cols-1 gap-4'>
-            {topTracksResponse.data.map((track) => {
+        ) : null}
+
+        {spotifyError?.getTopArtistsError ? (
+          <SpotifyErrorMessage message={spotifyError.getTopArtistsError} />
+        ) : null}
+      </div>
+
+      <div>
+        <div class='mb-2 flex h-28 flex-col justify-end bg-slate-900 px-1 py-2 outline outline-1 outline-slate-900'>
+          <h3 class='my-0 flex items-center gap-2 text-neutral-100'>
+            Recent Tracks
+            <div class='h-6 w-6 text-neutral-100'>
+              <SpotifyLogo />
+            </div>
+          </h3>
+          <p class='my-0 text-neutral-100'>
+            My ten(ish) most recently listened-to tracks:
+          </p>
+        </div>
+
+        {(!recentTracksResponseData && !spotifyError.getRecentTracksError) ||
+        spotifyDataLoading ? (
+          <RecentTracksSkeleton />
+        ) : null}
+
+        {recentTracksResponseData ? (
+          <div class='grid auto-rows-auto grid-cols-1 gap-4 sm:grid-cols-2'>
+            {recentTracksResponseData.map((track) => {
               return (
                 <a
                   key={track.trackName}
                   href={track.trackUrls.spotify}
                   rel='noopener noreferrer'
                   target='_blank'
-                  class='flex flex-row gap-2 overflow-hidden rounded-md no-underline outline outline-1'
+                  class='flex flex-row gap-2 overflow-hidden rounded-sm no-underline outline outline-1 outline-slate-900 md:rounded'
                 >
                   <img
                     src={track.trackImages[1].url}
@@ -137,10 +204,10 @@ const MySpotifyData = () => {
                     class='m-0 aspect-square h-auto w-28 object-cover'
                   />
                   <div class='flex w-full flex-col justify-center'>
-                    <p class='m-0 pe-2 text-base font-bold'>
+                    <p class='m-0 pe-2 text-base font-bold sm:text-lg'>
                       {track.trackName}
                     </p>
-                    <p class='m-0 pe-2'>
+                    <p class='m-0 pe-2 text-sm sm:text-base'>
                       {track.artistsOnTrack.map((artist, index, artistsArr) => {
                         if (
                           artistsArr.length > 1 &&
@@ -157,11 +224,13 @@ const MySpotifyData = () => {
               )
             })}
           </div>
-        </>
-      ) : (
-        <p>There was an error fetching top tracks.</p>
-      )}
-    </>
+        ) : null}
+
+        {spotifyError?.getRecentTracksError ? (
+          <SpotifyErrorMessage message={spotifyError.getRecentTracksError} />
+        ) : null}
+      </div>
+    </div>
   )
 }
 
