@@ -1,59 +1,80 @@
 ---
 import { Image } from 'astro:assets'
-import profilePic from '../Images/profile-pic.jpeg'
-import Icon from '../components/Icon.astro'
+import profilePic from '/src/images/profile-pic.jpeg'
 import ContentGroup from './ContentGroup.astro'
+import { bio } from '../data/site-data.json'
+const {
+  photo,
+  professionalBlurb,
+  personalBlurb,
+  jobTitle,
+  fullName,
+  location,
+  socials,
+} = bio
 ---
 
 <ContentGroup>
-  <div class='flex flex-row gap-4'>
+  <div
+    class='grid grid-cols-[fit-content(36%)_1fr_1fr] grid-rows-4 gap-1 sm:gap-2'
+  >
     <Image
       src={profilePic}
-      alt='Image of Anthony standing in front of sunflowers smiling.'
-      class='m-0 max-h-40 w-1/2 max-w-40 rounded-full'
+      alt={photo.altText}
+      class='col-span-1 row-span-3 aspect-square max-h-44 w-auto object-contain'
     />
-    <div class='flex w-full flex-col items-center justify-center gap-2'>
-      <h2 class='m-0 text-center'>Anthony Pogliano</h2>
-      <p class='m-0 text-center'>Full-Stack Web Developer</p>
-      <div class='flex w-full flex-row justify-around md:w-1/2'>
-        <a
-          href='https://github.com/anmpog'
-          target='_blank'
-          class='flex justify-center rounded-full p-1 align-middle'
-          ><Icon
-            name='Github'
-            class='w-6 fill-slate-800 hover:fill-slate-600'
-          /></a
+    <div
+      class='col-span-2 row-span-3 flex flex-col justify-end bg-slate-900 p-1 sm:p-2'
+    >
+      <h2 class='m-0 text-neutral-100'>{fullName}</h2>
+      <p class='m-0 text-sm font-light text-neutral-100 sm:text-base'>
+        {jobTitle}
+      </p>
+    </div>
+    <div
+      class='col-span-3 grid grid-cols-subgrid [@media(min-width:500px)]:flex'
+    >
+      <div
+        class='col-span-2 flex w-full items-center gap-1 bg-slate-900 p-1 text-neutral-100'
+      >
+        <div
+          class='flex aspect-square h-6 w-auto items-center justify-center rounded-sm p-1 text-inherit sm:h-8'
         >
-        <a
-          href='https://github.com/anmpog'
-          target='_blank'
-          class='flex justify-center rounded-full p-1 align-middle'
-          ><Icon
-            name='GitLab'
-            class='w-6 fill-slate-800 hover:fill-slate-600'
-          /></a
-        >
-        <a
-          href='https://github.com/anmpog'
-          target='_blank'
-          class='flex justify-center rounded-full p-1 align-middle'
-          ><Icon
-            name='LinkedIn'
-            class='w-6 fill-slate-800 hover:fill-slate-600'
-          />
-        </a>
+          <span
+            class='iconify inline h-full w-full text-inherit ion--globe-outline'
+          ></span>
+        </div>
+        <p class='m-0 text-neutral-100'>{location}</p>
+      </div>
+      <div
+        class='col-start-3 flex items-center justify-between bg-slate-900 p-1 text-neutral-100 sm:justify-around [@media(min-width:500px)]:gap-4'
+      >
+        {
+          socials.map((social) => {
+            return (
+              <a
+                href={social.url}
+                target='_blank'
+                class='flex aspect-square h-6 w-auto items-center justify-center rounded-sm p-1 outline outline-1 sm:h-8 [@media(max-width:375px)]:outline-none'
+              >
+                <span
+                  class:list={[
+                    `iconify inline h-full w-full text-inherit ion--logo-${social.name} hover:bg-slate-400`,
+                  ]}
+                />
+              </a>
+            )
+          })
+        }
       </div>
     </div>
   </div>
-  <article>
+  <article class='[&>*:last-child]:mb-0'>
     <p>
-      Hi, I'm Anthony! I'm a web developer based in Boulder, Colorado. I love
-      collaborative environments, novel problems, and learning about new
-      technologies. While I have worked as a full-stack developer, I am really
-      fascinated by UI and UX on the front-end, and I find working in the
-      front-end to be where I thrive. I use React and Node to make functional
-      sites and applications.
+      {professionalBlurb}
+    </p>
+    <p>
+      {personalBlurb}
     </p>
   </article>
 </ContentGroup>

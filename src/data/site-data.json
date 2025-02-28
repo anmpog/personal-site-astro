@@ -41,7 +41,28 @@
     }
   ],
   "bio": {
+    "photo": {
+      "url": "/src/images/profile-pic.jpeg",
+      "altText": "Image of Anthony standing in the Scottish Highlands wearing a black beanie and a  smirk."
+    },
+    "fullName": "Anthony Pogliano",
+    "jobTitle": "Full-Stack Web Developer",
+    "location": "Boulder, CO",
     "professionalBlurb": "Hi, I'm Anthony! I'm a web developer based in Boulder, Colorado. I love collaborative environments, novel problems, and learning about new technologies. While I have worked as a full-stack developer, I find working in the front-end to be where I thrive. I use React and Node to make functional sites and applications.",
-    "personalBlurb": "When I'm not writing code, you can find me climbing indoors or out, listening to music, reading, watching a show, gaming, cooking, riding a bike, or hanging out at the cafe. I love talking over shared interests, and hearing about what makes other people tick."
+    "personalBlurb": "When I'm not writing code, you can find me climbing indoors or out, listening to music, reading, watching a show, gaming, cooking, riding a bike, or hanging out at the cafe. I love talking over shared interests, and hearing about what makes other people tick.",
+    "socials": [
+      {
+        "name": "github",
+        "url": "https://github.com/anmpog"
+      },
+      {
+        "name": "gitlab",
+        "url": "https://gitlab.com/anmpog"
+      },
+      {
+        "name": "linkedin",
+        "url": "https://linkedin.com/in/anthony-pogliano-4644b5280"
+      }
+    ]
   }
 }
