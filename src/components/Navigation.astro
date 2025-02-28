@@ -9,17 +9,17 @@ const currentParentPath = pathName.split('/')[1]
 ---
 
 <header>
-  <nav class='flex items-center justify-between px-4 py-4 md:px-0'>
+  <nav class='flex items-center justify-between px-4 py-4 sm:mb-2 md:mb-4'>
     <Logo />
     <ul class='flex gap-2'>
-      <li>
+      <li class='m-0'>
         <NavLink
           linkName={'Home'}
           to={'/'}
           currentParentPath={currentParentPath}
         />
       </li>
-      <li>
+      <li class='m-0'>
         <NavLink
           linkName={'Blog'}
           to={'/blog'}

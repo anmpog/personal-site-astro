@@ -8,13 +8,16 @@ const allPosts = await getCollection('blog')
 <Layout>
   {
     allPosts.length > 0 ? (
-      <ul class='m-0 flex list-none flex-col gap-8 p-0'>
+      <ul class='m-0 flex list-none flex-col gap-4 p-0 sm:gap-6'>
         {allPosts.sort(sortByDate).map((post: any) => {
           const { title, pubDate, description, tags } = post.data
           return (
-            <a href={`/blog/${post.id}`} class='no-underline'>
+            <a
+              href={`/blog/${post.id}`}
+              class='px-2 py-4 no-underline outline outline-1'
+            >
               <li class='m-0 p-0'>
-                <h3 class='mb-2 mt-0'>{title}</h3>
+                <h3 class='mt-0'>{title}</h3>
                 <time class='italic' datetime={pubDate.toISOString()}>
                   {pubDate.toDateString()}
                 </time>
