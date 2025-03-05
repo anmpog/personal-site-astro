@@ -1,10 +1,46 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+/* @config '../../tailwind.config.mjs'; */
+
+@theme {
+  --font-body: 'Open Sans', sans;
+  --font-heading: 'Merriweather', serif;
+  --font-monospace: 'Menlo', mono;
+  --font-logo: 'Calistoga', serif;
+
+  --color-text: #0a0a0a;
+  --color-background: #23242b;
+  --color-primary: #ee562f;
+  --color-light-primary: #f17455;
+  --color-secondary: #f2af29;
+  --color-light-secondary: #f5be51;
+  --color-muted: #e0e0ce;
+  --color-gray: #3d3d3d;
+  --color-darken: #e0e0ce;
+  --color-dark-card: #424349;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 @layer base {
-  * {
-    color: theme(colors.text);
+  html {
+    color: var(--color-text);
   }
   p,
   li {
@@ -56,7 +92,7 @@
     @apply mb-2;
   }
 
-  @screen sm {
+  @media (width >= theme(--breakpoint-sm)) {
     p,
     li {
       @apply text-base;
@@ -98,7 +134,7 @@
     }
   }
 
-  @screen md {
+  @media (width >= theme(--breakpoint-md)) {
     p,
     li {
       @apply text-lg;
