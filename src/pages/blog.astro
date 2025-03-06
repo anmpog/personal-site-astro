@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 import { sortByDate } from '../utils/sortByDate'
+import Pill from '../components/Pill.astro'
 const allPosts = await getCollection('blog')
 ---
 
@@ -14,7 +15,7 @@ const allPosts = await getCollection('blog')
           return (
             <a
               href={`/blog/${post.id}`}
-              class='px-2 py-4 no-underline outline outline-1'
+              class='px-2 py-4 no-underline outline-1'
             >
               <li class='m-0 p-0'>
                 <h3 class='mt-0'>{title}</h3>
@@ -24,9 +25,7 @@ const allPosts = await getCollection('blog')
                 <p class='font-normal'>{description}</p>
                 <ul class='flex flex-wrap gap-1 p-0'>
                   {tags.map((tag: string) => (
-                    <li class='m-0 list-none rounded-xl border px-2 capitalize'>
-                      {tag}
-                    </li>
+                    <Pill>{tag}</Pill>
                   ))}
                 </ul>
               </li>
