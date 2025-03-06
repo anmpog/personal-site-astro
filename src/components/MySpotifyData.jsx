@@ -12,7 +12,7 @@ const TopArtistsSkeleton = () => {
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          class='flex animate-pulse flex-col overflow-hidden rounded-sm bg-slate-300 no-underline outline outline-1 outline-slate-400 md:rounded'
+          class='flex animate-pulse flex-col overflow-hidden rounded-xs bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
         >
           <div class='m-0 aspect-square h-auto w-full bg-slate-400 object-cover' />
           <p class='h-5 w-4/5 self-center rounded-xl bg-slate-400 sm:h-7'>
@@ -31,7 +31,7 @@ const RecentTracksSkeleton = () => {
         return (
           <div
             key={i}
-            class='background flex animate-pulse flex-row gap-2 overflow-hidden rounded-sm bg-slate-300 no-underline outline outline-1 outline-slate-400 md:rounded'
+            class='background flex animate-pulse flex-row gap-2 overflow-hidden rounded-xs bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
           >
             <div class='m-0 aspect-square h-28 w-28 bg-slate-400' />
             <div class='flex w-full flex-col justify-center gap-2'>
@@ -51,8 +51,8 @@ const RecentTracksSkeleton = () => {
 
 const SpotifyErrorMessage = ({ message }) => {
   return (
-    <div class='flex h-28 items-center gap-2 overflow-hidden rounded-sm bg-red-200 p-2 align-middle italic outline outline-1 outline-red-400 md:rounded'>
-      <span class='iconify inline-block text-3xl ion--alert-circle-outline'></span>
+    <div class='flex h-28 items-center gap-2 overflow-hidden rounded-xs bg-red-200 p-2 align-middle italic outline-1 outline-red-400 md:rounded-sm'>
+      <span class='iconify ion--alert-circle-outline inline-block text-3xl'></span>
       <p class='m-0'>{message}</p>
     </div>
   )
@@ -60,7 +60,7 @@ const SpotifyErrorMessage = ({ message }) => {
 
 const ClientErrorMessage = ({ message }) => {
   return (
-    <div class='flex flex-col gap-3 overflow-hidden rounded-sm bg-red-200 px-2 py-4 outline outline-1 outline-red-400 md:rounded'>
+    <div class='flex flex-col gap-3 overflow-hidden rounded-xs bg-red-200 px-2 py-4 outline-1 outline-red-400 md:rounded-sm'>
       <h4 class='m-0 italic'>
         There was supposed to be some data here, but something went wrong. Yell
         at Anthony for breaking things.
@@ -123,7 +123,7 @@ const MySpotifyData = () => {
   return (
     <div class='flex flex-col gap-6'>
       <div>
-        <div class='mb-2 flex h-28 flex-col justify-end bg-slate-900 px-1 py-2 outline outline-1 outline-slate-900'>
+        <div class='mb-2 flex h-28 flex-col justify-end bg-slate-900 px-1 py-2 outline-1 outline-slate-900'>
           <h3 class='my-0 flex items-center gap-2 text-neutral-100'>
             Top Artists
             <div class='inline-block h-6 w-6 text-neutral-100'>
@@ -149,7 +149,7 @@ const MySpotifyData = () => {
                 href={artist.artistLinks.spotify}
                 rel='noopener noreferrer'
                 target='_blank'
-                class='overflow-hidden rounded-sm no-underline outline outline-1 outline-slate-900 md:rounded'
+                class='overflow-hidden rounded-xs no-underline outline-1 outline-slate-900 md:rounded-sm'
               >
                 <img
                   src={artist.artistImages[1].url}
@@ -170,7 +170,7 @@ const MySpotifyData = () => {
       </div>
 
       <div>
-        <div class='mb-2 flex h-28 flex-col justify-end bg-slate-900 px-1 py-2 outline outline-1 outline-slate-900'>
+        <div class='mb-2 flex h-28 flex-col justify-end bg-slate-900 px-1 py-2 outline-1 outline-slate-900'>
           <h3 class='my-0 flex items-center gap-2 text-neutral-100'>
             Recent Tracks
             <div class='h-6 w-6 text-neutral-100'>
@@ -196,7 +196,7 @@ const MySpotifyData = () => {
                   href={track.trackUrls.spotify}
                   rel='noopener noreferrer'
                   target='_blank'
-                  class='flex flex-row gap-2 overflow-hidden rounded-sm no-underline outline outline-1 outline-slate-900 md:rounded'
+                  class='flex flex-row gap-2 overflow-hidden rounded-xs no-underline outline-1 outline-slate-900 md:rounded-sm'
                 >
                   <img
                     src={track.trackImages[1].url}

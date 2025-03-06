@@ -167,7 +167,7 @@
     }
 
     h3 {
-      @apply text-3xl;
+      @apply text-xl;
       @apply mt-8;
       @apply mb-3.5;
     }
