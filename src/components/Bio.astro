@@ -3,6 +3,7 @@ import { Image } from 'astro:assets'
 import profilePic from '/src/images/profile-pic.jpeg'
 import ContentGroup from './ContentGroup.astro'
 import { bio } from '../data/site-data.json'
+import { Icon } from 'astro-icon/components'
 const {
   photo,
   professionalBlurb,
@@ -35,30 +36,30 @@ const {
       class='col-span-3 grid grid-cols-subgrid [@media(min-width:500px)]:flex'
     >
       <div
-        class='col-span-2 flex w-full items-center gap-1 bg-slate-900 p-1 text-neutral-100'
+        class='col-span-2 flex w-full items-center gap-1 bg-slate-900 p-1'
       >
         <div
-          class='flex aspect-square h-6 w-auto items-center justify-center rounded-sm p-1 text-inherit sm:h-8'
+          class='flex aspect-square h-6 w-auto items-center justify-center rounded-xs p-1 sm:h-8'
         >
-          <span
-            class='iconify inline h-full w-full text-inherit ion--globe-outline'
-          ></span>
+          <Icon name='ion:globe-outline' class='w-full h-full text-neutral-100' />
         </div>
         <p class='m-0 text-neutral-100'>{location}</p>
       </div>
       <div
-        class='col-start-3 flex items-center justify-between bg-slate-900 p-1 text-neutral-100 sm:justify-around [@media(min-width:500px)]:gap-4'
+        class='col-start-3 flex items-center justify-between bg-slate-900 p-1 sm:justify-around [@media(min-width:500px)]:gap-4'
       >
         {
-          socials.map((social) => {
+          socials.map(({ url, name }) => {
             return (
               <a
-                href={social.url}
+                href={url}
                 target='_blank'
-                class='flex aspect-square h-6 w-auto items-center justify-center rounded-sm p-1 outline outline-1 sm:h-8 [@media(max-width:375px)]:outline-none'
+                class='flex aspect-square h-6 w-auto items-center justify-center rounded-xs p-1 outline-1 sm:h-8 [@media(max-width:375px)]:outline-hidden outline-neutral-100'
               >
-                <span
-                  class=`iconify inline h-full w-full text-inherit ion--logo-${social.name} hover:bg-slate-400`
+                <Icon
+                  name={`ion:logo-${name}`}
+                  title=`Link to ${name} profile`
+                  class='h-full w-full text-neutral-100'
                 />
               </a>
             )
