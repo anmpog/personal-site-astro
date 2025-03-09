@@ -7,30 +7,38 @@ const { previousPostData, nextPostData } = Astro.props
     previousPostData ? (
       <a
         href={`/blog/${previousPostData.id}`}
-        class='flex flex-col rounded-md px-4 py-2 no-underline outline outline-1 outline-black'
+        class='flex flex-col rounded-md px-4 py-2 no-underline outline-1 outline-black'
       >
         <span class='self-start font-bold'>← Last Post</span>
-        <span class='italic'>{previousPostData.data.title}</span>
+        <p class='m-0 italic'>{previousPostData.data.title}</p>
       </a>
     ) : (
-      <p class='m-0 rounded-md px-4 py-2 outline outline-1 outline-black'>
-        No previous posts!
-      </p>
+      <div class='flex cursor-not-allowed flex-col rounded-md px-4 py-2 outline-1 outline-black'>
+        <span class='self-start font-bold'>← Last Post</span>
+        <p class='m-0 italic'>No previous posts!</p>
+      </div>
     )
   }
+  <a
+    href='/blog/'
+    class='flex justify-center rounded-md px-4 py-2 font-bold no-underline outline-1 outline-black'
+  >
+    Blog Home
+  </a>
   {
     nextPostData ? (
       <a
         href={`/blog/${nextPostData.id}`}
-        class='flex flex-col rounded-md px-4 py-2 no-underline outline outline-1 outline-black'
+        class='flex flex-col rounded-md px-4 py-2 no-underline outline-1 outline-black'
       >
         <span class='self-end font-bold'>Next Post →</span>
-        <span class='self-end italic'>{nextPostData.data.title}</span>
+        <p class='m-0 self-end italic'>{nextPostData.data.title}</p>
       </a>
     ) : (
-      <p class='m-0 rounded-md px-4 py-2 outline outline-1 outline-black'>
-        No next post!
-      </p>
+      <div class='flex cursor-not-allowed flex-col rounded-md px-4 py-2 outline-1 outline-black'>
+        <span class='self-end font-bold'>Next Post →</span>
+        <p class='m-0 self-end italic'>No next post!</p>
+      </div>
     )
   }
 </div>

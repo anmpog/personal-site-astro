@@ -1,6 +1,4 @@
 @import 'tailwindcss';
-@plugin '@tailwindcss/typography';
-/* @config '../../tailwind.config.mjs'; */
 
 @theme {
   --font-body: 'Open Sans', sans;
@@ -42,6 +40,14 @@
   html {
     color: var(--color-text);
   }
+
+  .astro-code {
+    @apply px-2;
+    @apply py-4;
+    @apply rounded-sm;
+    @apply text-sm;
+  }
+
   p,
   li {
     @apply text-sm;
@@ -97,6 +103,10 @@
     li {
       @apply text-base;
       @apply my-4;
+    }
+
+    .astro-code {
+      @apply text-base;
     }
 
     p,
@@ -167,7 +177,7 @@
     }
 
     h3 {
-      @apply text-xl;
+      @apply text-3xl;
       @apply mt-8;
       @apply mb-3.5;
     }

@@ -1,5 +1,4 @@
 ---
-import Prose from '../../components/Prose.astro'
 import Layout from '../../layouts/Layout.astro'
 import { getCollection, render } from 'astro:content'
 import { sortByDate } from '../../utils/sortByDate'
@@ -27,12 +26,8 @@ const { Content } = await render(post)
 
 <Layout>
   <div class='flex flex-1 flex-col'>
-    <div class='mb-4 flex h-28 items-end bg-slate-900 p-1 px-1 sm:p-2'>
-      <h2 class='m-0 text-neutral-100'>{post.data.title}</h2>
-    </div>
-    <Prose>
-      <Content />
-    </Prose>
+    <h2>{post.data.title}</h2>
+    <Content />
     <BlogNav nextPostData={nextPostData} previousPostData={previousPostData} />
   </div>
 </Layout>
