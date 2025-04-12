@@ -25,10 +25,10 @@ const {
       class='col-span-1 row-span-3 aspect-square max-h-44 w-auto object-contain'
     />
     <div
-      class='col-span-2 row-span-3 flex flex-col justify-end bg-slate-900 p-1 sm:p-2'
+      class='col-span-2 row-span-3 flex flex-col justify-end bg-(--color-heading) p-1 sm:p-2 gap-1'
     >
-      <h2 class='m-0 text-neutral-100'>{fullName}</h2>
-      <p class='m-0 text-sm font-light text-neutral-100 sm:text-base'>
+      <h1 class='m-0 text-neutral-100'>{fullName}</h1>
+      <p class='m-0 text-sm font-light text-neutral-100 sm:text-base md:text-lg'>
         {jobTitle}
       </p>
     </div>
@@ -36,7 +36,7 @@ const {
       class='col-span-3 grid grid-cols-subgrid [@media(min-width:500px)]:flex'
     >
       <div
-        class='col-span-2 flex w-full items-center gap-1 bg-slate-900 p-1'
+        class='col-span-2 flex w-full items-center gap-1 bg-(--color-heading) p-1 sm:p-2'
       >
         <div
           class='flex aspect-square h-6 w-auto items-center justify-center rounded-xs p-1 sm:h-8'
@@ -46,7 +46,7 @@ const {
         <p class='m-0 text-neutral-100'>{location}</p>
       </div>
       <div
-        class='col-start-3 flex items-center justify-between bg-slate-900 p-1 sm:justify-around [@media(min-width:500px)]:gap-4'
+        class='col-start-3 flex items-center justify-between bg-(--color-heading) p-1 sm:p-2 sm:justify-around [@media(min-width:500px)]:gap-4'
       >
         {
           socials.map(({ url, name }) => {
@@ -54,12 +54,12 @@ const {
               <a
                 href={url}
                 target='_blank'
-                class='flex aspect-square h-6 w-auto items-center justify-center rounded-xs p-1 outline-1 sm:h-8 [@media(max-width:375px)]:outline-hidden outline-neutral-100'
+                class='flex aspect-square h-7 w-auto items-center justify-center rounded-xs p-1 sm:h-8 sm:outline-1 [@media(max-width:375px)]:outline-hidden outline-neutral-100'
               >
                 <Icon
                   name={`ion:logo-${name}`}
                   title=`Link to ${name} profile`
-                  class='h-full w-full text-neutral-100'
+                  class='h-full w-full text-neutral-100 hover:text-neutral-300'
                 />
               </a>
             )
@@ -68,7 +68,7 @@ const {
       </div>
     </div>
   </div>
-  <article class='[&>*:last-child]:mb-0'>
+  <article class='mt-4 flow-content'>
     <p>
       {professionalBlurb}
     </p>

@@ -18,22 +18,28 @@ const workExperience = await getCollection('workExperience')
         skills,
       } = experienceItem.data
       return (
-        <div class='mt-8 flex flex-col first:mt-0'>
-          <a href={siteUrl} class='no-underline' target='_blank'>
-            <h3 class='mt-0 mb-2'>{company}</h3>
-            <div class='flex flex-col'>
-              <p class='m-0 text-base font-bold'>{jobTitle}</p>
-              <time class='text-sm italic'>
-                {startDate} – {endDate ? endDate : null}
-              </time>
-            </div>
-            <p class='font-normal'>{description}</p>
-            <ul class='m-0 flex flex-wrap gap-1 p-0'>
-              {skills.map((skill: any) => {
-                return <Pill>{skill}</Pill>
-              })}
-            </ul>
-          </a>
+        <div class='flow-content mt-8 flex flex-col first:mt-0'>
+          <h3>
+            <a
+              href={siteUrl}
+              class='underline decoration-transparent transition-all duration-300 ease-in-out hover:decoration-[var(--color-taupe)]'
+              target='_blank'
+            >
+              {company}
+            </a>
+          </h3>
+          <div class='flex flex-col'>
+            <p class='m-0 text-base font-bold'>{jobTitle}</p>
+            <time class='text-sm italic'>
+              {startDate} – {endDate ? endDate : null}
+            </time>
+          </div>
+          <p class='font-normal'>{description}</p>
+          <ul class='m-0 flex flex-wrap gap-1 p-0'>
+            {skills.map((skill) => {
+              return <Pill>{skill}</Pill>
+            })}
+          </ul>
         </div>
       )
     })

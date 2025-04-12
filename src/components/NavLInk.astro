@@ -3,24 +3,37 @@ const { linkName, to, currentParentPath } = Astro.props
 ---
 
 <!-- Active link styling by comparing currentParentPath with `to` with slashes stripped out -->
-<a href={to} class={currentParentPath === to.slice(1) ? 'active' : null}>
+<a
+  href={to}
+  data-text={linkName}
+  class={currentParentPath === to.slice(1) ? 'active' : null}
+>
   {linkName}
 </a>
 
 <style>
   a {
-    padding: theme('space.2') theme('space.1');
+    display: inline-flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: inherit;
   }
-  a::before {
-    content: '\00B7';
+
+  a::after {
+    content: attr(data-text);
+    height: 0;
     visibility: hidden;
+    overflow: hidden;
+    user-select: none;
+    pointer-events: none;
+    color: var(--color-taupe);
+    font-weight: bold;
   }
 
   .active {
-    color: var(--color-primary);
-    text-decoration: none;
-    &:before {
-      visibility: visible;
-    }
+    font-weight: bold;
+    color: var(--color-taupe);
+    text-decoration: underline;
+    text-decoration-color: var(--color-taupe);
   }
 </style>

@@ -1,4 +1,5 @@
 ---
+import Hamburger from './Hamburger.astro'
 import Logo from './Logo.astro'
 import NavLink from './NavLink.astro'
 const pathName = new URL(Astro.request.url).pathname
@@ -9,23 +10,53 @@ const currentParentPath = pathName.split('/')[1]
 ---
 
 <header>
-  <nav class='flex items-center justify-between px-4 py-4 sm:mb-2 md:mb-4'>
+  <nav class='relative flex items-center justify-between p-4 sm:mb-2 md:mb-4'>
     <Logo />
-    <ul class='flex gap-2'>
-      <li class='m-0'>
+    <Hamburger />
+    <ul
+      id='nav-menu-links'
+      class='nav-links sm:gap-4) invisible absolute top-0 right-0 flex h-[90vh] w-full transform-(--dropdown-menu-closed-transform) flex-col items-center justify-center gap-6 bg-(--color-secondary) transition-(--dropdown-menu-closed-transition) duration-500 ease-in sm:visible sm:relative sm:h-auto sm:transform-none sm:flex-row sm:justify-end sm:bg-transparent sm:transition-none [&.expanded]:visible [&.expanded]:transform-(--dropdown-menu-expanded-transform) [&.stop-animation]:transition-(--stop-animation)'
+    >
+      <li class='m-0 list-none p-3 text-2xl sm:p-0 sm:text-lg'>
         <NavLink
           linkName={'Home'}
           to={'/'}
           currentParentPath={currentParentPath}
         />
       </li>
-      <li class='m-0'>
+      <li class='m-0 list-none p-3 text-2xl sm:p-0 sm:text-lg'>
         <NavLink
           linkName={'Blog'}
           to={'/blog'}
           currentParentPath={currentParentPath}
         />
       </li>
+      <li class='m-0 list-none p-3 text-2xl sm:p-0 sm:text-lg'>
+        <NavLink
+          linkName={'Consumption'}
+          to={'/consumption'}
+          currentParentPath={currentParentPath}
+        />
+      </li>
     </ul>
   </nav>
+
+  <script>
+    import '../scripts/close-nav.js'
+
+    // Adding a class to stop transitions from firing on resize
+    const navMenuLinks = document.getElementById(
+      'nav-menu-links'
+    ) as HTMLElement
+
+    let stopAnimationTimer: ReturnType<typeof setTimeout>
+    window.addEventListener('resize', () => {
+      navMenuLinks.classList.add('stop-animation')
+      clearTimeout(stopAnimationTimer)
+
+      stopAnimationTimer = setTimeout(() => {
+        navMenuLinks.classList.remove('stop-animation')
+      }, 300)
+    })
+  </script>
 </header>

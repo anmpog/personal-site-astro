@@ -7,18 +7,63 @@
   --font-logo: 'Calistoga', serif;
 
   --color-text: #0a0a0a;
-  --color-background: #23242b;
-  --color-primary: #ee562f;
-  --color-light-primary: #f17455;
-  --color-secondary: #f2af29;
-  --color-light-secondary: #f5be51;
+  --color-heading: #01200f;
+  --color-heading-light: #023b1c;
+  --color-background: #e5dac7;
+  --color-primary: #ba5c12;
+  --color-secondary: #00a6fb;
   --color-muted: #e0e0ce;
   --color-gray: #3d3d3d;
   --color-darken: #e0e0ce;
-  --color-dark-card: #424349;
+  --color-taupe: #261f17;
+
+  /* Dropdown Menu */
+  --dropdown-menu-closed-transform: translateY(-100%);
+  --dropdown-menu-closed-transition: transform 0.5s ease-in visibility 0.5s
+    ease-in;
+  --dropdown-menu-expanded-transform: translateY(0);
+  /* Stop animation applied to dropdown menu during resize event */
+  --stop-animation: none !important;
+
+  /* Experiment with my own type scale */
+  /* Small Screens - Major Second (Base layer) */ /* assuming 1rem == 16px */
+  --fs-small-text: 1rem;
+  --fs-small-h1: 2.027rem;
+  --fs-small-h2: 1.802rem;
+  --fs-small-h3: 1.602rem;
+  --fs-small-h4: 1.424rem;
+  --fs-small-h5: 1.266rem;
+  --fs-small-h6: 1.125rem;
+  --fs-small-small: 0.889rem;
+  --fs-small-xsmall: 0.79rem;
+
+  /* Medium Screens - Minor Third (Between Small and Medium breakpoints) */
+  /* assuming 1.125rem == 18px */
+  --fs-medium-text: 1.125rem;
+  --fs-medium-h1: 2.986rem;
+  --fs-medium-h2: 2.488rem;
+  --fs-medium-h3: 2.074rem;
+  --fs-medium-h4: 1.728rem;
+  --fs-medium-h5: 1.44rem;
+  --fs-medium-h6: 1.2rem;
+  --fs-medium-small: 0.833rem;
+  --fs-medium-xsmall: 0.694rem;
+
+  /* Desktop - Major Third (Medium breakpoint and above) */
+  /* assuming 1.25rem == 20px */
+  --fs-desktop-text: 1.25rem;
+  --fs-desktop-h1: 3.815rem;
+  --fs-desktop-h2: 3.052rem;
+  --fs-desktop-h3: 2.441rem;
+  --fs-desktop-h4: 1.953rem;
+  --fs-desktop-h5: 1.563rem;
+  --fs-desktop-h6: 1.25rem;
+  --fs-desktop-small: 0.8rem;
+  --fs-desktop-xsmall: 0.64rem;
 }
 
-/*
+@layer base {
+  /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
   looks the same as it did with Tailwind CSS v3.
@@ -26,7 +71,6 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
-@layer base {
   *,
   ::after,
   ::before,
@@ -34,13 +78,69 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
-}
 
-@layer base {
-  html {
+  body {
     color: var(--color-text);
+    line-height: 1.4;
+    font-size: var(--fs-small-text);
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    line-height: 1.1;
+  }
+
+  p,
+  li {
+    max-width: 65ch;
+  }
+
+  ul,
+  li {
+    list-style: inside;
+  }
+
+  ul > li + li,
+  ol > li + li {
+    margin-top: 0.75em;
+  }
+
+  ul,
+  ol {
+    padding-left: 1rem;
+  }
+
+  li {
+    list-style: outside disc;
+  }
+
+  /* Scale headings */
+  h1 {
+    font-size: var(--fs-small-h1);
+  }
+
+  h2 {
+    font-size: var(--fs-small-h2);
+  }
+
+  h3 {
+    font-size: var(--fs-small-h3);
+  }
+
+  h4 {
+    font-size: var(--fs-small-h4);
+  }
+
+  h5 {
+    font-size: var(--fs-small-h5);
+  }
+
+  /* Styling for code and code blocks */
   .astro-code {
     @apply px-2;
     @apply py-4;
@@ -48,144 +148,117 @@
     @apply text-sm;
   }
 
-  p,
-  li {
-    @apply text-sm;
-    @apply my-3.5;
-    @apply font-body;
-    word-break: break-word;
-    hyphens: auto;
-  }
-
-  p,
-  ul,
-  li,
-  h1,
-  h2,
-  h3,
-  h4 {
-    max-width: 65ch;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4 {
-    @apply font-heading;
-  }
-
-  h1 {
-    @apply text-3xl;
-    @apply mt-0;
-    @apply mb-3.5;
-  }
-
-  h2 {
-    @apply text-2xl;
-    @apply mt-7;
-    @apply mb-3;
-  }
-
-  h3 {
-    @apply text-xl;
-    @apply mt-6;
-    @apply mb-2.5;
-  }
-
-  h4 {
-    @apply text-lg;
-    @apply mt-5;
-    @apply mb-2;
+  :not(pre) > code {
+    display: inline-block;
+    vertical-align: bottom;
+    border-radius: 0.25em;
+    padding: 0.125em 0.5em;
+    background-color: #282a36;
+    color: #8be9fd;
+    font-size: var(--fs-small-small);
   }
 
   @media (width >= theme(--breakpoint-sm)) {
-    p,
-    li {
-      @apply text-base;
-      @apply my-4;
+    body {
+      font-size: var(--fs-medium-text);
     }
 
-    .astro-code {
-      @apply text-base;
-    }
-
-    p,
     ul,
-    li,
-    h1,
-    h2,
-    h3,
-    h4 {
-      max-width: 70ch;
+    ol {
+      padding-left: 1.25rem;
     }
 
     h1 {
-      @apply text-4xl;
-      @apply mt-0;
-      @apply mb-4;
+      font-size: var(--fs-medium-h1);
     }
 
     h2 {
-      @apply text-3xl;
-      @apply mt-8;
-      @apply mb-3.5;
+      font-size: var(--fs-medium-h2);
     }
 
     h3 {
-      @apply text-2xl;
-      @apply mt-7;
-      @apply mb-3;
+      font-size: var(--fs-medium-h3);
     }
 
     h4 {
-      @apply text-xl;
-      @apply mt-6;
-      @apply mb-2.5;
+      font-size: var(--fs-medium-h4);
+    }
+
+    h5 {
+      font-size: var(--fs-medium-h5);
+    }
+
+    /* Styling for code and code blocks */
+    .astro-code {
+      @apply px-4;
+      @apply py-6;
+      @apply text-sm;
+    }
+
+    :not(pre) > code {
+      padding: 0.25em 0.5em;
+      font-size: var(--fs-medium-small);
     }
   }
 
   @media (width >= theme(--breakpoint-md)) {
-    p,
-    li {
-      @apply text-lg;
-      @apply my-5;
-      @apply font-body;
-      word-break: break-word;
-      hyphens: auto;
+    body {
+      font-size: var(--fs-desktop-text);
     }
 
-    p,
-    ul,
-    li,
     h1,
     h2,
     h3,
-    h4 {
-      max-width: 75ch;
+    h4,
+    h5,
+    h6 {
+      line-height: 1;
+    }
+
+    ul,
+    ol {
+      padding-left: 1.5rem;
     }
 
     h1 {
-      @apply text-5xl;
-      @apply mt-0;
-      @apply mb-5;
+      font-size: var(--fs-desktop-h1);
     }
 
     h2 {
-      @apply text-4xl;
-      @apply mt-9;
-      @apply mb-4;
+      font-size: var(--fs-desktop-h2);
     }
 
     h3 {
-      @apply text-3xl;
-      @apply mt-8;
-      @apply mb-3.5;
+      font-size: var(--fs-desktop-h3);
     }
 
     h4 {
-      @apply text-2xl;
-      @apply mt-7;
-      @apply mb-3;
+      font-size: var(--fs-desktop-h4);
+    }
+
+    h5 {
+      font-size: var(--fs-desktop-h5);
+    }
+
+    /* Styling for code and code blocks */
+    .astro-code {
+      @apply text-base;
+    }
+
+    :not(pre) > code {
+      font-size: var(--fs-desktop-small);
     }
   }
+}
+
+/* Used to block scrolling while nav menu is open on mobile */
+.block-scroll {
+  position: relative;
+  height: 100vh;
+  overflow-y: hidden;
+  touch-action: none;
+}
+
+.flow-content > * + * {
+  margin-top: 1em;
 }

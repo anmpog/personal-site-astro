@@ -15,9 +15,11 @@ const TopArtistsSkeleton = () => {
           class='flex animate-pulse flex-col overflow-hidden rounded-xs bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
         >
           <div class='m-0 aspect-square h-auto w-full bg-slate-400 object-cover' />
-          <p class='h-5 w-4/5 self-center rounded-xl bg-slate-400 sm:h-7'>
-            &nbsp;
-          </p>
+          <div className='flex h-16 items-center justify-center'>
+            <p class='h-5 w-4/5 self-center rounded-xl bg-slate-400 sm:h-7'>
+              &nbsp;
+            </p>
+          </div>
         </div>
       ))}
     </div>
@@ -60,7 +62,7 @@ const SpotifyErrorMessage = ({ message }) => {
 
 const ClientErrorMessage = ({ message }) => {
   return (
-    <div class='flex flex-col gap-3 overflow-hidden rounded-xs bg-red-200 px-2 py-4 outline-1 outline-red-400 md:rounded-sm'>
+    <div class='my-auto flex flex-col gap-3 overflow-hidden rounded-xs bg-red-200 px-2 py-4 outline-1 outline-red-400 md:rounded-sm'>
       <h4 class='m-0 italic'>
         There was supposed to be some data here, but something went wrong. Yell
         at Anthony for breaking things.
@@ -123,8 +125,8 @@ const MySpotifyData = () => {
   return (
     <div class='flex flex-col gap-6'>
       <div>
-        <div class='mb-2 flex h-28 flex-col justify-end bg-slate-900 px-1 py-2 outline-1 outline-slate-900'>
-          <h3 class='my-0 flex items-center gap-2 text-neutral-100'>
+        <div class='mb-2 flex flex-col justify-end bg-(--color-heading) p-1 outline-1 outline-slate-900 sm:p-2'>
+          <h3 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Top Artists
             <div class='inline-block h-6 w-6 text-neutral-100'>
               <SpotifyLogo />
@@ -156,9 +158,11 @@ const MySpotifyData = () => {
                   alt={`${artist.artistName} Artwork`}
                   class='m-0 aspect-square h-auto w-full object-cover'
                 />
-                <p class='truncate px-1 text-center text-sm font-bold sm:text-lg'>
-                  {artist.artistName}
-                </p>
+                <div className='flex h-16 items-center justify-center'>
+                  <p class='truncate px-1 text-center text-sm font-bold sm:text-lg'>
+                    {artist.artistName}
+                  </p>
+                </div>
               </a>
             ))}
           </div>
@@ -170,8 +174,8 @@ const MySpotifyData = () => {
       </div>
 
       <div>
-        <div class='mb-2 flex h-28 flex-col justify-end bg-slate-900 px-1 py-2 outline-1 outline-slate-900'>
-          <h3 class='my-0 flex items-center gap-2 text-neutral-100'>
+        <div class='mb-2 flex flex-col justify-end bg-(--color-heading) p-1 outline-1 outline-slate-900 sm:p-2'>
+          <h3 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Recent Tracks
             <div class='h-6 w-6 text-neutral-100'>
               <SpotifyLogo />
