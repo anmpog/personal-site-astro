@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 import { sortByDate } from '../utils/sortByDate'
 import Pill from '../components/Pill.astro'
-import { number } from 'astro:schema'
 const allPosts = await getCollection('blog')
 ---
 
@@ -16,7 +15,7 @@ const allPosts = await getCollection('blog')
           return (
             <a
               href={`/blog/${post.id}`}
-              class='group px-2 py-4 no-underline outline-1'
+              class='group border-heading border-1 px-2 py-4 no-underline'
             >
               <li class='flow-content list-none'>
                 <h3 class='mt-0 capitalize underline decoration-transparent transition-all duration-300 ease-in-out group-has-hover:decoration-[var(--color-taupe)]'>
