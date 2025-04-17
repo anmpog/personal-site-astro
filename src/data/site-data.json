@@ -43,7 +43,7 @@
   "bio": {
     "photo": {
       "url": "/src/images/profile-pic.jpeg",
-      "altText": "Image of Anthony standing in the Scottish Highlands wearing a black beanie and a  smirk."
+      "altText": "Image of Anthony standing in the Scottish Highlands wearing a black beanie and a smirk."
     },
     "fullName": "Anthony Pogliano",
     "jobTitle": "Full-Stack Web Developer",
@@ -52,15 +52,15 @@
     "personalBlurb": "When I'm not writing code, you can find me climbing indoors or out, listening to music, reading, watching a show, gaming, cooking, riding a bike, or hanging out at the cafe. I love talking over shared interests, and hearing about what makes other people tick.",
     "socials": [
       {
-        "name": "github",
+        "profileName": "github",
         "url": "https://github.com/anmpog"
       },
       {
-        "name": "gitlab",
+        "profileName": "gitlab",
         "url": "https://gitlab.com/anmpog"
       },
       {
-        "name": "linkedin",
+        "profileName": "linkedin",
         "url": "https://linkedin.com/in/anthony-pogliano-4644b5280"
       }
     ]

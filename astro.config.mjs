@@ -6,6 +6,7 @@ import icon from 'astro-icon'
 
 // https://astro.build/config
 export default defineConfig({
+  // @ts-ignore
   vite: { plugins: [tailwindcss()] },
   integrations: [preact({ compat: true }), icon()],
   devToolbar: { enabled: false },
