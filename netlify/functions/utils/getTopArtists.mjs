@@ -31,5 +31,6 @@ export default async function getTopArtists(accessToken) {
         success: false,
       }
     })
+    
   return response
 }

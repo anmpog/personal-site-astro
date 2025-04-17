@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
 import SpotifyLogo from '../assets/svg/SpotifyLogo'
+import getTopArtists from '../../netlify/functions/utils/getTopArtists.mjs'
+import AlertIcon from '../assets/svg/AlertIcon'
 
 const myHeaders = new Headers({
   'Content-Type': 'application/json',
@@ -12,7 +14,7 @@ const TopArtistsSkeleton = () => {
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          class='flex animate-pulse flex-col overflow-hidden rounded-xs bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
+          class='flex animate-pulse flex-col overflow-hidden rounded-xs border-1 border-slate-400 bg-slate-300 no-underline md:rounded-sm'
         >
           <div class='m-0 aspect-square h-auto w-full bg-slate-400 object-cover' />
           <div className='flex h-16 items-center justify-center'>
@@ -53,21 +55,27 @@ const RecentTracksSkeleton = () => {
 
 const SpotifyErrorMessage = ({ message }) => {
   return (
-    <div class='flex h-28 items-center gap-2 overflow-hidden rounded-xs bg-red-200 p-2 align-middle italic outline-1 outline-red-400 md:rounded-sm'>
-      <span class='iconify ion--alert-circle-outline inline-block text-3xl'></span>
-      <p class='m-0'>{message}</p>
+    <div class='flex h-28 items-center gap-2 overflow-hidden rounded-xs border-1 border-red-400 bg-red-200 p-2 align-middle md:rounded-sm'>
+      <div class='aspect-square h-8 w-auto self-center text-red-500 sm:h-12'>
+        <AlertIcon />
+      </div>
+      <p class='m-0 italic'>{message}</p>
     </div>
   )
 }
 
 const ClientErrorMessage = ({ message }) => {
   return (
-    <div class='my-auto flex flex-col gap-3 overflow-hidden rounded-xs bg-red-200 px-2 py-4 outline-1 outline-red-400 md:rounded-sm'>
-      <h4 class='m-0 italic'>
-        There was supposed to be some data here, but something went wrong. Yell
-        at Anthony for breaking things.
-      </h4>
-      <p class='m-0'>Hint: {message}</p>
+    <div class='my-auto flex flex-row gap-4 overflow-hidden rounded-xs border-1 border-red-400 bg-red-200 px-6 py-8 md:rounded-sm'>
+      <div class='aspect-square h-8 w-auto self-center text-red-500 sm:h-12'>
+        <AlertIcon />
+      </div>
+      <div>
+        <h4>
+          There was supposed to be some data here, but something went wrong...
+        </h4>
+        <p class='mt-[1em] italic'>Hint: {message}</p>
+      </div>
     </div>
   )
 }
@@ -82,31 +90,53 @@ const MySpotifyData = () => {
   })
   const [clientError, setClientError] = useState(null)
 
+  // I want respective skeletons to show immediately (because fetch wont
+  // trigger until useEffect fires. I want skeletons to remain if there
+  // is no (respective) error or data – indicating that fetching has not
+  // completed. Successful fetch should result in either data or an error.
+  // Loading state is always set to false after attempting to fetch data.
+  // I think technically it doesn't matter if the spotifyDataLoading value
+  // is referenced because the other two variables reliably indicate the
+  // desired behavior...but I love to doubt myself and honestly I'm tired
+  // of thinking about this sh!t right now so it stays. But at least I'm using
+  // derived state?
+  const displayTopArtistsSkeleton =
+    (!topArtistsResponseData && !spotifyError.getTopArtistsError) ||
+    spotifyDataLoading
+
+  const displayRecentTracksSkeleton =
+    (!recentTracksResponseData && !spotifyError.getTopArtistsError) ||
+    spotifyDataLoading
+
   useEffect(() => {
     setSpotifyDataLoading(true)
-    fetch(`api/getSpotifyData`, {
+    fetch(`/api/getSpotifyData`, {
       headers: myHeaders,
     })
       .then((res) => res.json())
       .then((data) => {
-        const { getTopArtistsResponse, getRecentTracksResponse } = data
+        if (!data.success) {
+          setClientError(data.message)
+        } else {
+          const { getTopArtistsResponse, getRecentTracksResponse } = data
 
-        if (getRecentTracksResponse.success) {
-          setRecentTracksResponseData(getRecentTracksResponse.data)
-        } else if (!getRecentTracksResponse.success) {
-          setSpotifyError({
-            ...spotifyError,
-            getRecentTracksError: getRecentTracksResponse.message,
-          })
-        }
+          if (getRecentTracksResponse.success) {
+            setRecentTracksResponseData(getRecentTracksResponse.data)
+          } else if (!getRecentTracksResponse.success) {
+            setSpotifyError((prev) => ({
+              ...prev,
+              getRecentTracksError: getRecentTracksResponse.message,
+            }))
+          }
 
-        if (getTopArtistsResponse.success) {
-          setTopArtistsResponseData(getTopArtistsResponse.data)
-        } else if (!getTopArtistsResponse.success) {
-          setSpotifyError({
-            ...spotifyError,
-            getTopArtistsError: getTopArtistsResponse.message,
-          })
+          if (getTopArtistsResponse.success) {
+            setTopArtistsResponseData(getTopArtistsResponse.data)
+          } else if (!getTopArtistsResponse.success) {
+            setSpotifyError((prev) => ({
+              ...prev,
+              getTopArtistsError: getTopArtistsResponse.message,
+            }))
+          }
         }
       })
       .catch((error) => {
@@ -125,7 +155,7 @@ const MySpotifyData = () => {
   return (
     <div class='flex flex-col gap-6'>
       <div>
-        <div class='mb-2 flex flex-col justify-end bg-(--color-heading) p-1 outline-1 outline-slate-900 sm:p-2'>
+        <div class='mb-2 flex flex-col justify-end border-1 border-slate-900 bg-(--color-heading) p-1 sm:p-2'>
           <h3 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Top Artists
             <div class='inline-block h-6 w-6 text-neutral-100'>
@@ -138,10 +168,7 @@ const MySpotifyData = () => {
           </p>
         </div>
 
-        {(!topArtistsResponseData && !spotifyError.getTopArtistsError) ||
-        spotifyDataLoading ? (
-          <TopArtistsSkeleton />
-        ) : null}
+        {displayTopArtistsSkeleton ? <TopArtistsSkeleton /> : null}
 
         {topArtistsResponseData ? (
           <div class='md: grid grid-cols-2 gap-4 sm:grid-cols-3'>
@@ -151,7 +178,7 @@ const MySpotifyData = () => {
                 href={artist.artistLinks.spotify}
                 rel='noopener noreferrer'
                 target='_blank'
-                class='overflow-hidden rounded-xs no-underline outline-1 outline-slate-900 md:rounded-sm'
+                class='overflow-hidden rounded-xs border-1 border-slate-900 no-underline md:rounded-sm'
               >
                 <img
                   src={artist.artistImages[1].url}
@@ -174,7 +201,7 @@ const MySpotifyData = () => {
       </div>
 
       <div>
-        <div class='mb-2 flex flex-col justify-end bg-(--color-heading) p-1 outline-1 outline-slate-900 sm:p-2'>
+        <div class='mb-2 flex flex-col justify-end border-1 border-slate-900 bg-(--color-heading) p-1 sm:p-2'>
           <h3 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Recent Tracks
             <div class='h-6 w-6 text-neutral-100'>
@@ -186,10 +213,7 @@ const MySpotifyData = () => {
           </p>
         </div>
 
-        {(!recentTracksResponseData && !spotifyError.getRecentTracksError) ||
-        spotifyDataLoading ? (
-          <RecentTracksSkeleton />
-        ) : null}
+        {displayRecentTracksSkeleton ? <RecentTracksSkeleton /> : null}
 
         {recentTracksResponseData ? (
           <div class='grid auto-rows-auto grid-cols-1 gap-4 sm:grid-cols-2'>
@@ -200,7 +224,7 @@ const MySpotifyData = () => {
                   href={track.trackUrls.spotify}
                   rel='noopener noreferrer'
                   target='_blank'
-                  class='flex flex-row gap-2 overflow-hidden rounded-xs no-underline outline-1 outline-slate-900 md:rounded-sm'
+                  class='flex flex-row gap-2 overflow-hidden rounded-xs border-1 border-slate-900 no-underline md:rounded-sm'
                 >
                   <img
                     src={track.trackImages[1].url}
@@ -208,10 +232,10 @@ const MySpotifyData = () => {
                     class='m-0 aspect-square h-auto w-28 object-cover'
                   />
                   <div class='flex w-full flex-col justify-center'>
-                    <p class='m-0 pe-2 text-base font-bold sm:text-lg'>
+                    <p class='m-0 pe-2 text-base leading-tight font-bold sm:text-lg'>
                       {track.trackName}
                     </p>
-                    <p class='m-0 pe-2 text-sm sm:text-base'>
+                    <p class='m-0 pe-2 text-sm font-normal sm:text-base'>
                       {track.artistsOnTrack.map((artist, index, artistsArr) => {
                         if (
                           artistsArr.length > 1 &&

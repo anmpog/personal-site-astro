@@ -45,18 +45,29 @@ export default async function getSpotifyData(req) {
       const getTopArtistsResponse = await getTopArtists(accessToken)
 
       const successResponse = new Response(
-        JSON.stringify({ getRecentTracksResponse, getTopArtistsResponse }),
+        JSON.stringify({
+          getRecentTracksResponse,
+          getTopArtistsResponse,
+          success: true,
+        }),
         {
           status: 200,
+          headers: { 'Content-Type': 'application/json' },
         }
       )
 
       return successResponse
     } catch (error) {
-      const failureResponse = new Response(error.message, {
-        statusText: `There was an error accessing Spotify: ${error.message}`,
-        status: 500,
-      })
+      const failureResponse = new Response(
+        JSON.stringify({
+          message: error.message,
+          success: false,
+        }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
 
       return failureResponse
     }
