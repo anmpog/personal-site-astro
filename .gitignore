@@ -23,7 +23,5 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-# prettier config
-.prettierrc
 # Local Netlify folder
 .netlify
