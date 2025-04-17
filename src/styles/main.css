@@ -119,6 +119,12 @@
     list-style: outside disc;
   }
 
+  a {
+    text-decoration: underline;
+    font-weight: bold;
+    text-decoration-color: var(--color-primary);
+  }
+
   /* Scale headings */
   h1 {
     font-size: var(--fs-small-h1);
@@ -204,15 +210,6 @@
   @media (width >= theme(--breakpoint-md)) {
     body {
       font-size: var(--fs-desktop-text);
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      line-height: 1;
     }
 
     ul,
