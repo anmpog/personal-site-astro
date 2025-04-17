@@ -22,13 +22,15 @@ const {
     <Image
       src={profilePic}
       alt={photo.altText}
-      class='col-span-1 row-span-3 aspect-square max-h-44 w-auto object-contain'
+      class='col-span-1 row-span-3 aspect-square max-h-46 w-auto object-contain'
     />
     <div
-      class='col-span-2 row-span-3 flex flex-col justify-end bg-(--color-heading) p-1 sm:p-2 gap-1'
+      class='col-span-2 row-span-3 flex flex-col justify-end gap-1 bg-(--color-heading) p-1 sm:p-2'
     >
       <h1 class='m-0 text-neutral-100'>{fullName}</h1>
-      <p class='m-0 text-sm font-light text-neutral-100 sm:text-base md:text-lg'>
+      <p
+        class='m-0 text-sm font-light text-neutral-100 sm:text-base md:text-lg'
+      >
         {jobTitle}
       </p>
     </div>
@@ -41,34 +43,45 @@ const {
         <div
           class='flex aspect-square h-6 w-auto items-center justify-center rounded-xs p-1 sm:h-8'
         >
-          <Icon name='ion:globe-outline' class='w-full h-full text-neutral-100' />
+          <Icon
+            name='ion:globe-outline'
+            class='h-full w-full text-neutral-100'
+            title='geographical location'
+          />
         </div>
         <p class='m-0 text-neutral-100'>{location}</p>
       </div>
-      <div
-        class='col-start-3 flex items-center justify-between bg-(--color-heading) p-1 sm:p-2 sm:justify-around [@media(min-width:500px)]:gap-4'
+      <ul
+        class='col-start-3 flex items-center justify-between bg-(--color-heading) p-1 sm:justify-around sm:p-2 [@media(min-width:500px)]:gap-4'
       >
         {
-          socials.map(({ url, name }) => {
+          socials.map(({ url, profileName }) => {
             return (
-              <a
-                href={url}
-                target='_blank'
-                class='flex aspect-square h-7 w-auto items-center justify-center rounded-xs p-1 sm:h-8 sm:outline-1 [@media(max-width:375px)]:outline-hidden outline-neutral-100'
-              >
-                <Icon
-                  name={`ion:logo-${name}`}
-                  title=`Link to ${name} profile`
-                  class='h-full w-full text-neutral-100 hover:text-neutral-300'
-                />
-              </a>
+              <li class='m-0 list-none p-0'>
+                <a
+                  href={url}
+                  target='_blank'
+                  aria-labelledby={profileName}
+                  class='flex aspect-square h-7 w-auto items-center justify-center rounded-xs p-1 sm:h-8'
+                >
+                  <Icon
+                    name={`ion:logo-${profileName}`}
+                    class='h-full w-full text-neutral-100 hover:text-neutral-300'
+                    aria-hidden='true'
+                    focusable='false'
+                  />
+                  <span id={profileName} hidden>
+                    {profileName}
+                  </span>
+                </a>
+              </li>
             )
           })
         }
-      </div>
+      </ul>
     </div>
   </div>
-  <article class='mt-4 flow-content'>
+  <article class='flow-content mt-4'>
     <p>
       {professionalBlurb}
     </p>
