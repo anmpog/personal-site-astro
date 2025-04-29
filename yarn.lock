@@ -658,11 +658,6 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.24.2.tgz#34aa0b52d0fbb1a654b596acfa595f0c7b77a77b"
   integrity sha512-7VTgWzgMGvup6aSqDPLiW5zHaxYJGTO4OokMjIlrCtf+VpEL+cXKtCvg723iguPYI5oaUNdS+/V7OU2gvXVWEg==
 
-"@fontsource/calistoga@^5.1.0":
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/@fontsource/calistoga/-/calistoga-5.1.0.tgz#f2e8e13992c7c1bdb21963075c1acd260eca47e5"
-  integrity sha512-gUABkstnQep0WzfczyY0nsXXQAX4m8D791p3BKVyyHPcVVChRVBG7HnkIZsOP8rs/O8nMtyNFrC04hEB+e2m6g==
-
 "@fontsource/merriweather@^5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@fontsource/merriweather/-/merriweather-5.1.0.tgz#3644b3d19fc7f4171aff8d18dad113f595eec7d1"

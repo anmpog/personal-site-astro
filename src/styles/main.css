@@ -1,10 +1,26 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Adjusted Tahoma Fallback';
+  src: local(Tahoma);
+  size-adjust: 105%;
+  ascent-override: 106%;
+  descent-override: normal;
+  line-gap-override: normal;
+}
+
+@font-face {
+  font-family: 'Adjusted Georgia Fallback';
+  src: local(Georgia);
+  size-adjust: 111%;
+  ascent-override: 89%;
+  descent-override: normal;
+  line-gap-override: normal;
+}
+
 @theme {
-  --font-body: 'Open Sans', sans;
-  --font-heading: 'Merriweather', serif;
-  --font-monospace: 'Menlo', mono;
-  --font-logo: 'Calistoga', serif;
+  --font-body: 'Open Sans', 'Adjusted Tahoma Fallback', Tahoma, system-ui;
+  --font-heading: 'Merriweather', 'Adjusted Georgia Fallback', Georgia, serif;
 
   --color-text: #0a0a0a;
   --color-heading: #01200f;
@@ -71,6 +87,7 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
+
   *,
   ::after,
   ::before,
@@ -83,6 +100,7 @@
     color: var(--color-text);
     line-height: 1.4;
     font-size: var(--fs-small-text);
+    font-family: var(--font-body);
   }
 
   h1,
@@ -159,8 +177,8 @@
     vertical-align: bottom;
     border-radius: 0.25em;
     padding: 0.125em 0.5em;
-    background-color: #282a36;
-    color: #8be9fd;
+    background-color: #2d353b;
+    color: #e69875;
     font-size: var(--fs-small-small);
   }
 

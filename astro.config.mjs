@@ -12,7 +12,7 @@ export default defineConfig({
   devToolbar: { enabled: false },
   markdown: {
     shikiConfig: {
-      theme: 'dracula',
+      theme: 'everforest-dark',
     },
   },
 })
