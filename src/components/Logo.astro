@@ -1,5 +1,12 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
 <a
   href={'/'}
-  class='font-logo text-2xl tracking-tight text-(--color-heading) sm:text-3xl md:text-4xl'
-  >anmpog.dev</a
+  class='text-2xl tracking-tight text-(--color-heading) sm:text-3xl md:text-4xl'
+  aria-labelledby='logo'
 >
+  <span id='logo' hidden>anmpog.dev</span>
+  <Icon name='Logo' aria-hidden='true' focusable='false' />
+</a>
