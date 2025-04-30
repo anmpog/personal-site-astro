@@ -2,10 +2,15 @@
 import '@fontsource/merriweather'
 import '@fontsource/open-sans'
 import '../styles/main.css'
+import capitalize from 'lodash.capitalize'
 
 import Navigation from '../components/Navigation.astro'
 import Footer from '../components/Footer.astro'
 import { siteMetaData } from '../data/site-data.json'
+const { contentDescription } = Astro.props
+const url =
+  Astro.url.pathname === '/' ? 'home' : Astro.url.pathname.replace('/', '')
+const formattedTitleUrl = capitalize(url)
 ---
 
 <!doctype html>
@@ -15,7 +20,8 @@ import { siteMetaData } from '../data/site-data.json'
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
     <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
     <meta name='generator' content={Astro.generator} />
-    <title>{siteMetaData.siteTitle}</title>
+    <meta name='description' content={contentDescription} />
+    <title>{`${siteMetaData.siteTitle} | ${formattedTitleUrl}`}</title>
   </head>
   <body class='flex min-h-screen w-full flex-col bg-(--color-background)'>
     <div class='mx-auto flex w-full max-w-(--breakpoint-md) grow flex-col'>

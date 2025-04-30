@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro'
 import MySpotifyData from '../components/MySpotifyData.jsx'
 ---
 
-<Layout>
+<Layout
+  contentDescription='A curated selection of the content and media that Anthony has been consuming of late.'
+>
   <MySpotifyData client:load />
 </Layout>

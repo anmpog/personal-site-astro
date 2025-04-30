@@ -6,7 +6,9 @@ import Pill from '../components/Pill.astro'
 const allPosts = await getCollection('blog')
 ---
 
-<Layout>
+<Layout
+  contentDescription='A collection of blog posts that detail various technical interests and issues Anthony has encountered as a developer.'
+>
   {
     allPosts.length > 0 ? (
       <ul class='m-0 flex list-none flex-col gap-4 p-0 sm:gap-6'>
