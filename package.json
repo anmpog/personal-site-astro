@@ -17,12 +17,14 @@
     "astro": "^5.0.8",
     "astro-icon": "^1.1.5",
     "axios": "^1.7.9",
+    "lodash.capitalize": "^4.2.1",
     "preact": "^10.25.4",
     "tailwindcss": "^4.0.9"
   },
   "devDependencies": {
     "@iconify-json/ion": "^1.2.2",
     "@tailwindcss/postcss": "^4.0.9",
+    "@types/lodash": "^4.17.16",
     "node-html-parser": "^7.0.1",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",

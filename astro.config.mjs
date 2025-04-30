@@ -10,6 +10,7 @@ export default defineConfig({
   vite: { plugins: [tailwindcss()] },
   integrations: [preact({ compat: true }), icon()],
   devToolbar: { enabled: false },
+  site: 'http://www.anmpog.dev',
   markdown: {
     shikiConfig: {
       theme: 'everforest-dark',
