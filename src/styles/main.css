@@ -1,12 +1,30 @@
 @import 'tailwindcss';
 
 @font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 400;
+  src: url('src/assets/fonts/open-sans-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-display: optional;
+  font-weight: 400;
+  src: url('src/assets/fonts/merriweather-latin-400-normal.woff2')
+    format('woff2');
+}
+
+@font-face {
   font-family: 'Adjusted Tahoma Fallback';
   src: local(Tahoma);
   size-adjust: 105%;
   ascent-override: 106%;
   descent-override: normal;
   line-gap-override: normal;
+  font-display: optional;
 }
 
 @font-face {
@@ -16,6 +34,7 @@
   ascent-override: 89%;
   descent-override: normal;
   line-gap-override: normal;
+  font-display: optional;
 }
 
 @theme {
