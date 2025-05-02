@@ -297,3 +297,9 @@
 .flow-content > * + * {
   margin-top: 1em;
 }
+
+/* Class appended to body to prevent transitions/animations from firing while CSS is loading */
+.preload * {
+  transition: none !important;
+  animation-duration: 0.001s !important;
+}

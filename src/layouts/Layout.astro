@@ -21,7 +21,9 @@ const formattedTitleUrl = capitalize(url)
     <meta name='description' content={contentDescription} />
     <title>{`${siteMetaData.siteTitle} | ${formattedTitleUrl}`}</title>
   </head>
-  <body class='flex min-h-screen w-full flex-col bg-(--color-background)'>
+  <body
+    class='preload flex min-h-screen w-full flex-col bg-(--color-background)'
+  >
     <div class='mx-auto flex w-full max-w-(--breakpoint-md) grow flex-col'>
       <Navigation />
       <main class='grid w-full grow grid-cols-12 gap-4'>
@@ -33,3 +35,8 @@ const formattedTitleUrl = capitalize(url)
     </div>
   </body>
 </html>
+<script>
+  window.addEventListener('load', () => {
+    document.body.classList.remove('preload')
+  })
+</script>
