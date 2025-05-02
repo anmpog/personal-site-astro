@@ -3,7 +3,7 @@
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
   font-weight: 400;
   src: url('@fontsource/open-sans/files/open-sans-latin-400-normal.woff2')
     format('woff2');
@@ -12,7 +12,7 @@
 @font-face {
   font-family: 'Merriweather';
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
   font-weight: 400;
   src: url('@fontsource/merriweather/files/merriweather-latin-400-normal.woff2')
     format('woff2');
@@ -25,7 +25,7 @@
   ascent-override: 106%;
   descent-override: normal;
   line-gap-override: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 @font-face {
@@ -35,7 +35,7 @@
   ascent-override: 89%;
   descent-override: normal;
   line-gap-override: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 @theme {
