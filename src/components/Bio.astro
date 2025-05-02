@@ -1,6 +1,6 @@
 ---
-import { Image } from 'astro:assets'
-import profilePic from '/src/images/profile-pic.jpeg'
+import { Picture } from 'astro:assets'
+import profilePic from '/src/assets/images/profile-pic.jpeg'
 import ContentGroup from './ContentGroup.astro'
 import { bio } from '../data/site-data.json'
 import { Icon } from 'astro-icon/components'
@@ -20,10 +20,11 @@ const {
     class='grid grid-cols-[fit-content(36%)_1fr_1fr] grid-rows-4 gap-1 sm:gap-2'
   >
     <div class='col-span-1 row-span-3 block aspect-square max-h-46'>
-      <Image
+      <Picture
         src={profilePic}
         alt={photo.altText}
         class='block min-h-32 object-cover'
+        formats={['avif', 'webp']}
       />
     </div>
     <div
