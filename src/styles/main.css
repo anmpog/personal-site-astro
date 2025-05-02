@@ -5,7 +5,8 @@
   font-style: normal;
   font-display: optional;
   font-weight: 400;
-  src: url('src/assets/fonts/open-sans-latin-400-normal.woff2') format('woff2');
+  src: url('@fontsource/open-sans/files/open-sans-latin-400-normal.woff2')
+    format('woff2');
 }
 
 @font-face {
@@ -13,7 +14,7 @@
   font-style: normal;
   font-display: optional;
   font-weight: 400;
-  src: url('src/assets/fonts/merriweather-latin-400-normal.woff2')
+  src: url('@fontsource/merriweather/files/merriweather-latin-400-normal.woff2')
     format('woff2');
 }
 
