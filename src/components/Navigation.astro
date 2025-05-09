@@ -10,11 +10,11 @@ const currentParentPath = pathName.split('/')[1]
 ---
 
 <header>
-  <nav class='relative flex items-center justify-between p-4 sm:mb-2 md:mb-4'>
+  <div id='backdrop' class='backdrop'></div>
+  <nav>
     <Logo />
     <button
       id='nav-menu-button'
-      class='hamburger absolute right-0 z-100 mr-4 aspect-square h-8 w-auto cursor-pointer p-0 sm:hidden'
       aria-labelledby='button-label'
       aria-controls='nav-menu-links'
       aria-expanded='false'
@@ -23,42 +23,160 @@ const currentParentPath = pathName.split('/')[1]
       <Icon
         name='ion:menu-outline'
         title='hamburger menu'
-        class='text-primary pointer-events-none h-full w-full'
         aria-hidden='true'
         focusable='false'
       />
       <span id='button-label' hidden>Site Navigation</span>
     </button>
-    <ul
-      id='nav-menu-links'
-      class='nav-links absolute top-0 right-0 flex h-[90vh] w-full transform-(--dropdown-menu-closed-transform) flex-col items-center justify-center gap-6 bg-(--color-secondary) transition-(--dropdown-menu-closed-transition) duration-500 ease-in sm:visible sm:relative sm:h-auto sm:transform-none sm:flex-row sm:justify-end sm:gap-4 sm:bg-transparent sm:transition-none [&.expanded]:visible [&.expanded]:transform-(--dropdown-menu-expanded-transform) [&.stop-animation]:transition-(--stop-animation)'
-    >
-      <li class='m-0 list-none p-3 text-2xl sm:p-0 sm:text-lg'>
-        <NavLink
-          linkName={'Home'}
-          to={'/'}
-          currentParentPath={currentParentPath}
-        />
-      </li>
-      <li class='m-0 list-none p-3 text-2xl sm:p-0 sm:text-lg'>
-        <NavLink
-          linkName={'Blog'}
-          to={'/blog'}
-          currentParentPath={currentParentPath}
-        />
-      </li>
-      <li class='m-0 list-none p-3 text-2xl sm:p-0 sm:text-lg'>
-        <NavLink
-          linkName={'Consumption'}
-          to={'/consumption'}
-          currentParentPath={currentParentPath}
-        />
-      </li>
-    </ul>
+    <div id='nav-links-wrapper'>
+      <div id='nav-menu-links' class='nav-links'>
+        <ul>
+          <li>
+            <NavLink
+              linkName={'Home'}
+              to={'/'}
+              currentParentPath={currentParentPath}
+            />
+          </li>
+          <li>
+            <NavLink
+              linkName={'Blog'}
+              to={'/blog'}
+              currentParentPath={currentParentPath}
+            />
+          </li>
+          <li>
+            <NavLink
+              linkName={'Consumption'}
+              to={'/consumption'}
+              currentParentPath={currentParentPath}
+            />
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
-
   <script>
     import '../scripts/nav-menu.js'
     import '../scripts/stop-animation.ts'
   </script>
 </header>
+
+<style>
+  nav {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  button {
+    position: absolute;
+    right: 0;
+    z-index: 500;
+    margin-right: calc(var(--spacing) * 4);
+    aspect-ratio: 1/1;
+    height: calc(var(--spacing) * 8);
+    width: auto;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  button svg {
+    color: var(--color-primary);
+    pointer-events: none;
+    height: 100%;
+    width: 100%;
+  }
+
+  #nav-links-wrapper {
+    display: grid;
+    padding: 0;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.25s ease-in-out;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    background-color: var(--color-heading);
+  }
+
+  .nav-links {
+    min-height: 0;
+  }
+
+  #nav-links-wrapper.expanded {
+    grid-template-rows: 1fr;
+    backdrop-filter: blur(2px);
+    border-bottom-color: var(--color-secondary);
+    border-bottom-width: calc(var(--spacing) * 1);
+  }
+
+  #nav-links-wrapper ul {
+    height: 50vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  #nav-links-wrapper ul li {
+    margin: 0;
+    list-style: none;
+    padding: calc(var(--spacing) * 3);
+    font-size: calc(var(--text-2xl));
+  }
+
+  #backdrop.blur {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    backdrop-filter: blur(1px);
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  @media (width >= 40rem) {
+    nav {
+      margin-bottom: calc(var(--spacing) * 2);
+    }
+
+    button {
+      display: none;
+    }
+
+    #nav-links-wrapper {
+      display: flex;
+      flex-direction: row;
+      background: none;
+      transition: none;
+      position: relative;
+      justify-content: flex-end;
+    }
+
+    #nav-links-wrapper ul {
+      height: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    #nav-links-wrapper ul li {
+      padding: 0;
+      font-size: var(--text-lg);
+    }
+  }
+
+  @media (width >= 48rem) {
+    nav {
+      margin-bottom: calc(var(--spacing) * 4);
+    }
+  }
+</style>

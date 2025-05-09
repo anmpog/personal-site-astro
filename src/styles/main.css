@@ -48,18 +48,7 @@
   --color-background: #e5dac7;
   --color-primary: #ba5c12;
   --color-secondary: #00a6fb;
-  --color-muted: #e0e0ce;
-  --color-gray: #3d3d3d;
-  --color-darken: #e0e0ce;
   --color-taupe: #261f17;
-
-  /* Dropdown Menu */
-  --dropdown-menu-closed-transform: translateY(-100%);
-  --dropdown-menu-closed-transition: transform 0.5s ease-in visibility 0.5s
-    ease-in;
-  --dropdown-menu-expanded-transform: translateY(0);
-  /* Stop animation applied to dropdown menu during resize event */
-  --stop-animation: none !important;
 
   /* Experiment with my own type scale */
   /* Small Screens - Major Second (Base layer) */ /* assuming 1rem == 16px */
@@ -301,5 +290,4 @@
 /* Class appended to body to prevent transitions/animations from firing while CSS is loading */
 .preload * {
   transition: none !important;
-  animation-duration: 0.001s !important;
 }

@@ -33,10 +33,10 @@ const formattedTitleUrl = capitalize(url)
       </main>
       <Footer />
     </div>
+    <script>
+      window.addEventListener('load', () => {
+        document.body.classList.remove('preload')
+      })
+    </script>
   </body>
 </html>
-<script>
-  window.addEventListener('load', () => {
-    document.body.classList.remove('preload')
-  })
-</script>
