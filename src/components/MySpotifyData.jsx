@@ -35,7 +35,7 @@ const RecentTracksSkeleton = () => {
         return (
           <div
             key={i}
-            class='background flex animate-pulse flex-row gap-2 overflow-hidden rounded-xs bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
+            class='flex animate-pulse flex-row gap-2 overflow-hidden rounded-xs bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
           >
             <div class='m-0 aspect-square h-28 w-28 bg-slate-400' />
             <div class='flex w-full flex-col justify-center gap-2'>
@@ -156,12 +156,12 @@ const MySpotifyData = () => {
     <div class='flex flex-col gap-6'>
       <div>
         <div class='mb-2 flex flex-col justify-end border-1 border-slate-900 bg-(--color-heading) p-1 sm:p-2'>
-          <h3 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
+          <h2 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Top Artists
             <div class='inline-block h-6 w-6 text-neutral-100'>
               <SpotifyLogo />
             </div>
-          </h3>
+          </h2>
           <p class='my-0 text-neutral-100'>
             The six artists I've been listening to the most over the past 6
             months:
@@ -202,12 +202,12 @@ const MySpotifyData = () => {
 
       <div>
         <div class='mb-2 flex flex-col justify-end border-1 border-slate-900 bg-(--color-heading) p-1 sm:p-2'>
-          <h3 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
+          <h2 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Recent Tracks
             <div class='h-6 w-6 text-neutral-100'>
               <SpotifyLogo />
             </div>
-          </h3>
+          </h2>
           <p class='my-0 text-neutral-100'>
             My ten(ish) most recently listened-to tracks:
           </p>
