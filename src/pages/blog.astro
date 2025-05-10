@@ -20,9 +20,9 @@ const allPosts = await getCollection('blog')
               class='group border-heading border-1 px-2 py-4 no-underline'
             >
               <li class='flow-content list-none'>
-                <h3 class='mt-0 capitalize underline decoration-transparent transition-all duration-300 ease-in-out group-has-hover:decoration-[var(--color-taupe)]'>
+                <h2 class='mt-0 text-(--color-heading) capitalize underline decoration-transparent transition-all duration-300 ease-in-out group-has-hover:decoration-[var(--color-taupe)]'>
                   {title}
-                </h3>
+                </h2>
                 <time class='italic' datetime={pubDate.toISOString()}>
                   {/* {pubDate.toDateString()} */}
                   {pubDate.toLocaleDateString('en-EN', {
@@ -43,7 +43,13 @@ const allPosts = await getCollection('blog')
         })}
       </ul>
     ) : (
-      <h2>There are no posts</h2>
+      <div class='flow-content border-heading border-1 px-2 py-4'>
+        <h2 class='text-(--color-heading)'>There are no posts just yet...</h2>
+        <p>
+          I'm working on editing a few of the things I have written so far, and
+          hope to have them up shortly. Please check back again soon!
+        </p>
+      </div>
     )
   }
 </Layout>

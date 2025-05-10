@@ -19,6 +19,7 @@ const { linkName, to, currentParentPath } = Astro.props
     font-size: inherit;
     text-decoration: none;
     font-weight: normal;
+    color: var(--color-primary);
   }
 
   a::after {
@@ -28,14 +29,30 @@ const { linkName, to, currentParentPath } = Astro.props
     overflow: hidden;
     user-select: none;
     pointer-events: none;
-    color: var(--color-taupe);
     font-weight: bold;
   }
 
   .active {
     font-weight: bold;
-    color: var(--color-taupe);
+    color: var(--color-primary);
     text-decoration: underline;
-    text-decoration-color: var(--color-taupe);
+    text-decoration-color: var(--color-primary);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+
+  @media (width >= 40rem) {
+    a {
+      color: var(--color-taupe);
+    }
+
+    .active {
+      font-weight: bold;
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: var(--color-taupe);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 2px;
+    }
   }
 </style>

@@ -1,30 +1,33 @@
 const navMenuButton = document.getElementById('nav-menu-button')
-const navMenuLinks = document.getElementById('nav-menu-links')
+const backdropElement = document.getElementById('backdrop')
+const navMenuLinks = document.getElementById('nav-links-wrapper')
 
 // Utility Functions
 function blockScroll() {
   document.body.classList.add('block-scroll')
+  backdropElement.classList.add('blur')
   document.documentElement.classList.add('block-scroll')
 }
 
 function unblockScroll() {
   document.body.classList.remove('block-scroll')
+  backdropElement.classList.remove('blur')
   document.documentElement.classList.remove('block-scroll')
 }
 
 function openNavMenu() {
+  navMenuButton.setAttribute('aria-expanded', 'true')
   navMenuLinks.classList.add('expanded')
   blockScroll()
-  navMenuButton.setAttribute('aria-expanded', 'true')
 
   window.addEventListener('click', detectClickOutsideMenu, true)
   window.addEventListener('keydown', detectEscKeyPress, true)
 }
 
 function closeNavMenu() {
+  navMenuButton.setAttribute('aria-expanded', 'false')
   navMenuLinks.classList.remove('expanded')
   unblockScroll()
-  navMenuButton.setAttribute('aria-expanded', 'false')
 
   window.removeEventListener('click', detectClickOutsideMenu, true)
   window.removeEventListener('keydown', detectEscKeyPress, true)
@@ -45,6 +48,8 @@ function detectClickOutsideMenu(event) {
   ) {
     closeNavMenu()
   }
+
+  return null
 }
 
 // Listener for menu button
