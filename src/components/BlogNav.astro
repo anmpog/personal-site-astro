@@ -7,13 +7,13 @@ const { previousPostData, nextPostData } = Astro.props
     previousPostData ? (
       <a
         href={`/blog/${previousPostData.id}`}
-        class='flex flex-col rounded-md border-1 border-black px-4 py-2 font-normal no-underline sm:grow sm:basis-1/3'
+        class='flex flex-col rounded-md border border-black px-4 py-2 font-normal no-underline sm:grow sm:basis-1/3'
       >
         <span class='self-start font-bold'>← Last Post</span>
         <p class='m-0 italic'>{previousPostData.data.title}</p>
       </a>
     ) : (
-      <div class='flex cursor-not-allowed flex-col rounded-md border-1 border-black px-4 py-2 sm:grow sm:basis-1/3'>
+      <div class='flex cursor-not-allowed flex-col rounded-md border border-black px-4 py-2 sm:grow sm:basis-1/3'>
         <span class='self-start font-bold'>← Last Post</span>
         <p class='m-0 italic'>No previous posts!</p>
       </div>
@@ -21,7 +21,7 @@ const { previousPostData, nextPostData } = Astro.props
   }
   <a
     href='/blog/'
-    class='flex justify-center rounded-md border-1 border-black px-4 py-2 font-bold no-underline'
+    class='flex justify-center rounded-md border border-black px-4 py-2 font-bold no-underline'
   >
     Blog Home
   </a>
@@ -29,13 +29,13 @@ const { previousPostData, nextPostData } = Astro.props
     nextPostData ? (
       <a
         href={`/blog/${nextPostData.id}`}
-        class='flex flex-col rounded-md border-1 border-black px-4 py-2 font-normal no-underline sm:grow sm:basis-1/3'
+        class='flex flex-col rounded-md border border-black px-4 py-2 font-normal no-underline sm:grow sm:basis-1/3'
       >
         <span class='self-end font-bold'>Next Post →</span>
         <p class='m-0 self-end text-end italic'>{nextPostData.data.title}</p>
       </a>
     ) : (
-      <div class='flex cursor-not-allowed flex-col rounded-md border-1 border-black px-4 py-2 sm:grow sm:basis-1/3'>
+      <div class='flex cursor-not-allowed flex-col rounded-md border border-black px-4 py-2 sm:grow sm:basis-1/3'>
         <span class='self-end font-bold'>Next Post →</span>
         <p class='m-0 self-end italic'>No next post!</p>
       </div>

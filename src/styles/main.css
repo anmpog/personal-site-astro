@@ -1,102 +1,96 @@
-@import 'tailwindcss';
+/* main.css */
 
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src: url('@fontsource/open-sans/files/open-sans-latin-400-normal.woff2')
-    format('woff2');
-}
-
-@font-face {
-  font-family: 'Merriweather';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src: url('@fontsource/merriweather/files/merriweather-latin-400-normal.woff2')
-    format('woff2');
-}
-
-@font-face {
-  font-family: 'Adjusted Tahoma Fallback';
-  src: local(Tahoma);
-  size-adjust: 105%;
-  ascent-override: 106%;
-  descent-override: normal;
-  line-gap-override: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Adjusted Georgia Fallback';
-  src: local(Georgia);
-  size-adjust: 111%;
-  ascent-override: 89%;
-  descent-override: normal;
-  line-gap-override: normal;
-  font-display: swap;
-}
-
-@theme {
-  --font-body: 'Open Sans', 'Adjusted Tahoma Fallback', Tahoma, system-ui;
-  --font-heading: 'Merriweather', 'Adjusted Georgia Fallback', Georgia, serif;
-
-  --color-text: #0a0a0a;
-  --color-heading: #01200f;
-  --color-heading-light: #023b1c;
-  --color-background: #e5dac7;
-  --color-primary: #ba5c12;
-  --color-secondary: #00a6fb;
-  --color-taupe: #261f17;
-
-  /* Experiment with my own type scale */
-  /* Small Screens - Major Second (Base layer) */ /* assuming 1rem == 16px */
-  --fs-small-text: 1rem;
-  --fs-small-h1: 2.027rem;
-  --fs-small-h2: 1.802rem;
-  --fs-small-h3: 1.602rem;
-  --fs-small-h4: 1.424rem;
-  --fs-small-h5: 1.266rem;
-  --fs-small-h6: 1.125rem;
-  --fs-small-small: 0.889rem;
-  --fs-small-xsmall: 0.79rem;
-
-  /* Medium Screens - Minor Third (Between Small and Medium breakpoints) */
-  /* assuming 1.125rem == 18px */
-  --fs-medium-text: 1.125rem;
-  --fs-medium-h1: 2.986rem;
-  --fs-medium-h2: 2.488rem;
-  --fs-medium-h3: 2.074rem;
-  --fs-medium-h4: 1.728rem;
-  --fs-medium-h5: 1.44rem;
-  --fs-medium-h6: 1.2rem;
-  --fs-medium-small: 0.833rem;
-  --fs-medium-xsmall: 0.694rem;
-
-  /* Desktop - Major Third (Medium breakpoint and above) */
-  /* assuming 1.25rem == 20px */
-  --fs-desktop-text: 1.25rem;
-  --fs-desktop-h1: 3.815rem;
-  --fs-desktop-h2: 3.052rem;
-  --fs-desktop-h3: 2.441rem;
-  --fs-desktop-h4: 1.953rem;
-  --fs-desktop-h5: 1.563rem;
-  --fs-desktop-h6: 1.25rem;
-  --fs-desktop-small: 0.8rem;
-  --fs-desktop-xsmall: 0.64rem;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
-  /*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+  /* --- Theme variables (formerly @theme) --- */
+  :root {
+    /* Fonts */
+    --font-body: 'Open Sans', 'Adjusted Tahoma Fallback', Tahoma, system-ui;
+    --font-heading: 'Merriweather', 'Adjusted Georgia Fallback', Georgia, serif;
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+    /* Colors */
+    --color-text: #0a0a0a;
+    --color-heading: #01200f;
+    --color-heading-light: #023b1c;
+    --color-background: #e5dac7;
+    --color-primary: #ba5c12;
+    --color-secondary: #00a6fb;
+    --color-taupe: #261f17;
 
+    /* Type scale - small screens */
+    --fs-small-text: 1rem;
+    --fs-small-h1: 2.027rem;
+    --fs-small-h2: 1.802rem;
+    --fs-small-h3: 1.602rem;
+    --fs-small-h4: 1.424rem;
+    --fs-small-h5: 1.266rem;
+    --fs-small-h6: 1.125rem;
+    --fs-small-small: 0.889rem;
+    --fs-small-xsmall: 0.79rem;
+
+    /* Medium screens */
+    --fs-medium-text: 1.125rem;
+    --fs-medium-h1: 2.986rem;
+    --fs-medium-h2: 2.488rem;
+    --fs-medium-h3: 2.074rem;
+    --fs-medium-h4: 1.728rem;
+    --fs-medium-h5: 1.44rem;
+    --fs-medium-h6: 1.2rem;
+    --fs-medium-small: 0.833rem;
+    --fs-medium-xsmall: 0.694rem;
+
+    /* Desktop screens */
+    --fs-desktop-text: 1.25rem;
+    --fs-desktop-h1: 3.815rem;
+    --fs-desktop-h2: 3.052rem;
+    --fs-desktop-h3: 2.441rem;
+    --fs-desktop-h4: 1.953rem;
+    --fs-desktop-h5: 1.563rem;
+    --fs-desktop-h6: 1.25rem;
+    --fs-desktop-small: 0.8rem;
+    --fs-desktop-xsmall: 0.64rem;
+  }
+
+  /* --- Fonts --- */
+  @font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url('@fontsource/open-sans/files/open-sans-latin-400-normal.woff2')
+      format('woff2');
+  }
+  @font-face {
+    font-family: 'Merriweather';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url('@fontsource/merriweather/files/merriweather-latin-400-normal.woff2')
+      format('woff2');
+  }
+  @font-face {
+    font-family: 'Adjusted Tahoma Fallback';
+    src: local(Tahoma);
+    size-adjust: 105%;
+    ascent-override: 106%;
+    descent-override: normal;
+    line-gap-override: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Adjusted Georgia Fallback';
+    src: local(Georgia);
+    size-adjust: 111%;
+    ascent-override: 89%;
+    descent-override: normal;
+    line-gap-override: normal;
+    font-display: swap;
+  }
+
+  /* --- Base styles --- */
   *,
   ::after,
   ::before,
@@ -152,33 +146,25 @@
     text-decoration-color: var(--color-primary);
   }
 
-  /* Scale headings */
+  /* Scale headings - small */
   h1 {
     font-size: var(--fs-small-h1);
   }
-
   h2 {
     font-size: var(--fs-small-h2);
   }
-
   h3 {
     font-size: var(--fs-small-h3);
   }
-
   h4 {
     font-size: var(--fs-small-h4);
   }
-
   h5 {
     font-size: var(--fs-small-h5);
   }
 
-  /* Styling for code and code blocks */
   .astro-code {
-    @apply px-2;
-    @apply py-4;
-    @apply rounded-sm;
-    @apply text-sm;
+    @apply rounded-sm px-4 py-6 text-sm;
   }
 
   :not(pre) > code {
@@ -191,41 +177,33 @@
     font-size: var(--fs-small-small);
   }
 
-  @media (width >= theme(--breakpoint-sm)) {
+  /* --- Medium breakpoint --- */
+  @media (min-width: theme('screens.sm')) {
     body {
       font-size: var(--fs-medium-text);
     }
-
     ul,
     ol {
       padding-left: 1.25rem;
     }
-
     h1 {
       font-size: var(--fs-medium-h1);
     }
-
     h2 {
       font-size: var(--fs-medium-h2);
     }
-
     h3 {
       font-size: var(--fs-medium-h3);
     }
-
     h4 {
       font-size: var(--fs-medium-h4);
     }
-
     h5 {
       font-size: var(--fs-medium-h5);
     }
 
-    /* Styling for code and code blocks */
     .astro-code {
-      @apply px-4;
-      @apply py-6;
-      @apply text-sm;
+      @apply rounded-sm border px-4 py-6 text-sm;
     }
 
     :not(pre) > code {
@@ -234,37 +212,31 @@
     }
   }
 
-  @media (width >= theme(--breakpoint-md)) {
+  /* --- Desktop breakpoint --- */
+  @media (min-width: theme('screens.md')) {
     body {
       font-size: var(--fs-desktop-text);
     }
-
     ul,
     ol {
       padding-left: 1.5rem;
     }
-
     h1 {
       font-size: var(--fs-desktop-h1);
     }
-
     h2 {
       font-size: var(--fs-desktop-h2);
     }
-
     h3 {
       font-size: var(--fs-desktop-h3);
     }
-
     h4 {
       font-size: var(--fs-desktop-h4);
     }
-
     h5 {
       font-size: var(--fs-desktop-h5);
     }
 
-    /* Styling for code and code blocks */
     .astro-code {
       @apply text-base;
     }
@@ -275,19 +247,16 @@
   }
 }
 
-/* Used to block scrolling while nav menu is open on mobile */
+/* Utility overrides */
 .block-scroll {
   position: relative;
   height: 100vh;
   overflow-y: hidden;
   touch-action: none;
 }
-
 .flow-content > * + * {
   margin-top: 1em;
 }
-
-/* Class appended to body to prevent transitions/animations from firing while CSS is loading */
 .preload * {
   transition: none !important;
 }
