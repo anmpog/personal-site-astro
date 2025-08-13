@@ -1,8 +1,8 @@
 ---
-import Layout from '../../layouts/Layout.astro'
 import { getCollection, render } from 'astro:content'
-import { sortByDate } from '../../utils/sortByDate'
 import BlogNav from '../../components/BlogNav.astro'
+import Layout from '../../layouts/Layout.astro'
+import { sortByDate } from '../../utils/sortByDate'
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog')
@@ -27,7 +27,7 @@ const { Content } = await render(post)
 <Layout>
   <div class='flex flex-1 flex-col'>
     <div
-      class='flex flex-col justify-end bg-(--color-heading) p-1 outline-1 outline-slate-900 sm:p-2'
+      class='flex flex-col justify-end bg-heading p-1 outline-1 outline-slate-900 sm:p-2'
     >
       <h2
         class='mt-[1.5em] flex items-center gap-2 text-neutral-100 capitalize'
@@ -36,7 +36,7 @@ const { Content } = await render(post)
       </h2>
     </div>
     <!-- extraneous div is so that Content margins will collapse as desired -->
-    <div class='flow-content mt-4'>
+    <div class='flow-content mt-4 grow'>
       <Content />
     </div>
     <BlogNav nextPostData={nextPostData} previousPostData={previousPostData} />

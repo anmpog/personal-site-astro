@@ -63,6 +63,7 @@ const currentParentPath = pathName.split('/')[1]
 </header>
 
 <style>
+  /* The 0.25rem value comes from Tailwind4's --spacing variable's default value */
   nav {
     display: flex;
     position: relative;
@@ -75,9 +76,9 @@ const currentParentPath = pathName.split('/')[1]
     position: absolute;
     right: 0;
     z-index: 500;
-    margin-right: calc(var(--spacing) * 4);
+    margin-right: calc(0.25rem * 4);
     aspect-ratio: 1/1;
-    height: calc(var(--spacing) * 8);
+    height: calc(0.25rem * 8);
     width: auto;
     cursor: pointer;
     padding: 0;
@@ -111,7 +112,7 @@ const currentParentPath = pathName.split('/')[1]
     grid-template-rows: 1fr;
     backdrop-filter: blur(2px);
     border-bottom-color: var(--color-secondary);
-    border-bottom-width: calc(var(--spacing) * 1);
+    border-bottom-width: calc(0.25rem * 1);
   }
 
   #nav-links-wrapper ul {
@@ -127,8 +128,8 @@ const currentParentPath = pathName.split('/')[1]
   #nav-links-wrapper ul li {
     margin: 0;
     list-style: none;
-    padding: calc(var(--spacing) * 3);
-    font-size: calc(var(--text-2xl));
+    padding: calc(0.25rem * 3);
+    font-size: theme('fontSize.2xl');
   }
 
   #backdrop.blur {
@@ -143,7 +144,7 @@ const currentParentPath = pathName.split('/')[1]
 
   @media (width >= 40rem) {
     nav {
-      margin-bottom: calc(var(--spacing) * 2);
+      margin-bottom: calc(0.25rem * 2);
     }
 
     button {
@@ -170,13 +171,13 @@ const currentParentPath = pathName.split('/')[1]
 
     #nav-links-wrapper ul li {
       padding: 0;
-      font-size: var(--text-lg);
+      font-size: theme('fontSize.lg');
     }
   }
 
   @media (width >= 48rem) {
     nav {
-      margin-bottom: calc(var(--spacing) * 4);
+      margin-bottom: calc(0.25rem * 4);
     }
   }
 </style>
