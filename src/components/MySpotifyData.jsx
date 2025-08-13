@@ -13,7 +13,7 @@ const TopArtistsSkeleton = () => {
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          class='rounded-xs flex animate-pulse flex-col overflow-hidden border border-slate-400 bg-slate-300 no-underline md:rounded-sm'
+          class='flex animate-pulse flex-col overflow-hidden rounded-sm border border-slate-400 bg-slate-300 no-underline md:rounded-[.25rem]'
         >
           <div class='m-0 aspect-square h-auto w-full bg-slate-400 object-cover' />
           <div className='flex h-16 items-center justify-center'>
@@ -34,7 +34,7 @@ const RecentTracksSkeleton = () => {
         return (
           <div
             key={i}
-            class='rounded-xs flex animate-pulse flex-row gap-2 overflow-hidden border border-slate-400 bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
+            class='flex animate-pulse flex-row gap-2 overflow-hidden rounded-sm border border-slate-400 bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-[.25rem]'
           >
             <div class='m-0 aspect-square h-28 w-28 bg-slate-400' />
             <div class='flex w-full flex-col justify-center gap-2'>
@@ -54,7 +54,7 @@ const RecentTracksSkeleton = () => {
 
 const SpotifyErrorMessage = ({ message }) => {
   return (
-    <div class='rounded-xs flex h-28 items-center gap-2 overflow-hidden border border-red-400 bg-red-200 p-2 align-middle md:rounded-sm'>
+    <div class='flex h-28 items-center gap-2 overflow-hidden rounded-sm border border-red-400 bg-red-200 p-2 align-middle md:rounded-sm'>
       <div class='aspect-square h-8 w-auto self-center text-red-500 sm:h-12'>
         <AlertIcon />
       </div>
@@ -67,7 +67,7 @@ const ClientErrorMessage = ({
   message = 'Something went wrong on the client...',
 }) => {
   return (
-    <div class='rounded-xs my-auto flex flex-row gap-4 overflow-hidden border border-red-400 bg-red-200 px-6 py-8 md:rounded-sm'>
+    <div class='my-auto flex flex-row gap-4 overflow-hidden rounded-sm border border-red-400 bg-red-200 px-6 py-8 md:rounded-[.25rem]'>
       <div class='aspect-square h-8 w-auto self-center text-red-500 sm:h-12'>
         <AlertIcon />
       </div>
@@ -179,7 +179,7 @@ const MySpotifyData = () => {
                 href={artist.artistLinks.spotify}
                 rel='noopener noreferrer'
                 target='_blank'
-                class='rounded-xs overflow-hidden border border-slate-900 no-underline md:rounded-sm'
+                class='overflow-hidden rounded-sm border border-slate-900 no-underline md:rounded-[.25rem]'
               >
                 <img
                   src={artist.artistImages[1].url}
@@ -225,7 +225,7 @@ const MySpotifyData = () => {
                   href={track.trackUrls.spotify}
                   rel='noopener noreferrer'
                   target='_blank'
-                  class='rounded-xs flex flex-row gap-2 overflow-hidden border border-slate-900 no-underline md:rounded-sm'
+                  class='flex flex-row gap-2 overflow-hidden rounded-sm border border-slate-900 no-underline md:rounded-[.25rem]'
                 >
                   <img
                     src={track.trackImages[1].url}
