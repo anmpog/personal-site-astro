@@ -1,10 +1,9 @@
 ---
-import '../styles/main.css'
-import Navigation from '../components/Navigation.astro'
-import Footer from '../components/Footer.astro'
-
 import capitalize from 'lodash.capitalize'
+import Footer from '../components/Footer.astro'
+import Navigation from '../components/Navigation.astro'
 import { siteMetaData } from '../data/site-data.json'
+import '../styles/main.css'
 const { contentDescription } = Astro.props
 const url =
   Astro.url.pathname === '/' ? 'home' : Astro.url.pathname.replace('/', '')
@@ -21,10 +20,8 @@ const formattedTitleUrl = capitalize(url)
     <meta name='description' content={contentDescription} />
     <title>{`${siteMetaData.siteTitle} | ${formattedTitleUrl}`}</title>
   </head>
-  <body
-    class='preload flex min-h-screen w-full flex-col bg-(--color-background)'
-  >
-    <div class='mx-auto flex w-full max-w-(--breakpoint-md) grow flex-col'>
+  <body class='preload bg-background flex min-h-screen w-full flex-col'>
+    <div class='mx-auto flex w-full max-w-screen-md grow flex-col'>
       <Navigation />
       <main class='grid w-full grow grid-cols-12 gap-4'>
         <div class='col-start-1 col-end-13 flex flex-col px-4'>

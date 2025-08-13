@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'preact/hooks'
 import SpotifyLogo from '../assets/svg/SpotifyLogo'
-import getTopArtists from '../../netlify/functions/utils/getTopArtists.mjs'
 import AlertIcon from '../assets/svg/AlertIcon'
 
 const myHeaders = new Headers({
@@ -14,7 +13,7 @@ const TopArtistsSkeleton = () => {
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
-          class='flex animate-pulse flex-col overflow-hidden rounded-xs border-1 border-slate-400 bg-slate-300 no-underline md:rounded-sm'
+          class='rounded-xs flex animate-pulse flex-col overflow-hidden border border-slate-400 bg-slate-300 no-underline md:rounded-sm'
         >
           <div class='m-0 aspect-square h-auto w-full bg-slate-400 object-cover' />
           <div className='flex h-16 items-center justify-center'>
@@ -35,7 +34,7 @@ const RecentTracksSkeleton = () => {
         return (
           <div
             key={i}
-            class='flex animate-pulse flex-row gap-2 overflow-hidden rounded-xs bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
+            class='rounded-xs flex animate-pulse flex-row gap-2 overflow-hidden border border-slate-400 bg-slate-300 no-underline outline-1 outline-slate-400 md:rounded-sm'
           >
             <div class='m-0 aspect-square h-28 w-28 bg-slate-400' />
             <div class='flex w-full flex-col justify-center gap-2'>
@@ -55,7 +54,7 @@ const RecentTracksSkeleton = () => {
 
 const SpotifyErrorMessage = ({ message }) => {
   return (
-    <div class='flex h-28 items-center gap-2 overflow-hidden rounded-xs border-1 border-red-400 bg-red-200 p-2 align-middle md:rounded-sm'>
+    <div class='rounded-xs flex h-28 items-center gap-2 overflow-hidden border border-red-400 bg-red-200 p-2 align-middle md:rounded-sm'>
       <div class='aspect-square h-8 w-auto self-center text-red-500 sm:h-12'>
         <AlertIcon />
       </div>
@@ -64,9 +63,11 @@ const SpotifyErrorMessage = ({ message }) => {
   )
 }
 
-const ClientErrorMessage = ({ message }) => {
+const ClientErrorMessage = ({
+  message = 'Something went wrong on the client...',
+}) => {
   return (
-    <div class='my-auto flex flex-row gap-4 overflow-hidden rounded-xs border-1 border-red-400 bg-red-200 px-6 py-8 md:rounded-sm'>
+    <div class='rounded-xs my-auto flex flex-row gap-4 overflow-hidden border border-red-400 bg-red-200 px-6 py-8 md:rounded-sm'>
       <div class='aspect-square h-8 w-auto self-center text-red-500 sm:h-12'>
         <AlertIcon />
       </div>
@@ -155,7 +156,7 @@ const MySpotifyData = () => {
   return (
     <div class='flex flex-col gap-6'>
       <div>
-        <div class='mb-2 flex flex-col justify-end border-1 border-slate-900 bg-(--color-heading) p-1 sm:p-2'>
+        <div class='bg-heading mb-2 flex flex-col justify-end border border-slate-900 p-1 sm:p-2'>
           <h2 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Top Artists
             <div class='inline-block h-6 w-6 text-neutral-100'>
@@ -178,7 +179,7 @@ const MySpotifyData = () => {
                 href={artist.artistLinks.spotify}
                 rel='noopener noreferrer'
                 target='_blank'
-                class='overflow-hidden rounded-xs border-1 border-slate-900 no-underline md:rounded-sm'
+                class='rounded-xs overflow-hidden border border-slate-900 no-underline md:rounded-sm'
               >
                 <img
                   src={artist.artistImages[1].url}
@@ -201,7 +202,7 @@ const MySpotifyData = () => {
       </div>
 
       <div>
-        <div class='mb-2 flex flex-col justify-end border-1 border-slate-900 bg-(--color-heading) p-1 sm:p-2'>
+        <div class='bg-heading mb-2 flex flex-col justify-end border border-slate-900 p-1 sm:p-2'>
           <h2 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Recent Tracks
             <div class='h-6 w-6 text-neutral-100'>
@@ -224,7 +225,7 @@ const MySpotifyData = () => {
                   href={track.trackUrls.spotify}
                   rel='noopener noreferrer'
                   target='_blank'
-                  class='flex flex-row gap-2 overflow-hidden rounded-xs border-1 border-slate-900 no-underline md:rounded-sm'
+                  class='rounded-xs flex flex-row gap-2 overflow-hidden border border-slate-900 no-underline md:rounded-sm'
                 >
                   <img
                     src={track.trackImages[1].url}
@@ -232,7 +233,7 @@ const MySpotifyData = () => {
                     class='m-0 aspect-square h-auto w-28 object-cover'
                   />
                   <div class='flex w-full flex-col justify-center'>
-                    <p class='m-0 pe-2 text-base leading-tight font-bold sm:text-lg'>
+                    <p class='m-0 pe-2 text-base font-bold leading-tight sm:text-lg sm:leading-tight'>
                       {track.trackName}
                     </p>
                     <p class='m-0 pe-2 text-sm font-normal sm:text-base'>

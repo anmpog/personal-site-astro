@@ -1,9 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
-import { sortByDate } from '../utils/sortByDate'
 import Pill from '../components/Pill.astro'
-const allPosts = await getCollection('blog')
+import Layout from '../layouts/Layout.astro'
+import { sortByDate } from '../utils/sortByDate'
+import type { CollectionEntry } from 'astro:content'
+const allPosts: CollectionEntry<'blog'>[] = await getCollection('blog')
 ---
 
 <Layout
@@ -17,14 +18,13 @@ const allPosts = await getCollection('blog')
           return (
             <a
               href={`/blog/${post.id}`}
-              class='group border-heading border-1 px-2 py-4 no-underline'
+              class='border-heading group border px-2 py-4 no-underline'
             >
               <li class='flow-content list-none'>
-                <h2 class='mt-0 text-(--color-heading) capitalize underline decoration-transparent transition-all duration-300 ease-in-out group-has-hover:decoration-[var(--color-taupe)]'>
+                <h2 class='text-heading group-hover:decoration-[var(--color-taupe)] mt-0 capitalize underline decoration-transparent transition-all duration-300 ease-in-out'>
                   {title}
                 </h2>
                 <time class='italic' datetime={pubDate.toISOString()}>
-                  {/* {pubDate.toDateString()} */}
                   {pubDate.toLocaleDateString('en-EN', {
                     day: 'numeric',
                     month: 'long',
@@ -33,7 +33,7 @@ const allPosts = await getCollection('blog')
                 </time>
                 <p class='font-normal'>{description}</p>
                 <ul class='flex flex-wrap gap-1 p-0'>
-                  {tags.map((tag) => (
+                  {tags?.map((tag) => (
                     <Pill>{tag}</Pill>
                   ))}
                 </ul>
@@ -44,7 +44,7 @@ const allPosts = await getCollection('blog')
       </ul>
     ) : (
       <div class='flow-content border-heading border-1 px-2 py-4'>
-        <h2 class='text-(--color-heading)'>There are no posts just yet...</h2>
+        <h2 class='text-heading'>There are no posts just yet...</h2>
         <p>
           I'm working on editing a few of the things I have written so far, and
           hope to have them up shortly. Please check back again soon!
