@@ -37,6 +37,7 @@ export default async function getSpotifyData(req) {
 
   if (req.method === 'GET') {
     let accessToken = ''
+    console.log('Get request to getSpotifyData')
 
     try {
       const { data } = await axios.request(refreshTokenOptions)
@@ -44,7 +45,15 @@ export default async function getSpotifyData(req) {
 
       const getRecentTracksResponse = await getRecentTracks(accessToken)
       const getTopArtistsResponse = await getTopArtists(accessToken)
-      const cacheControlHeaders = new CacheHeaders(undefined, 'netlify')
+      const cacheControlHeaders = new CacheHeaders(
+        { 'Content-Type': 'application/json', 'My-header': 'testing' },
+        'netlify'
+      )
+
+      console.log('Cache control headers: ', cacheControlHeaders)
+      console.log('Testing structure of headers obj: ', {
+        ...cacheControlHeaders,
+      })
 
       const successResponse = new Response(
         JSON.stringify({
