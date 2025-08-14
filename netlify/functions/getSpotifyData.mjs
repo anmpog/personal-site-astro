@@ -1,6 +1,7 @@
 import axios from 'axios'
 import getRecentTracks from './utils/getRecentTracks.mjs'
 import getTopArtists from './utils/getTopArtists.mjs'
+import { CacheHeaders } from 'cdn-cache-control'
 
 // Options for POST request for refreshing auth token
 const refreshTokenOptions = {
@@ -43,6 +44,7 @@ export default async function getSpotifyData(req) {
 
       const getRecentTracksResponse = await getRecentTracks(accessToken)
       const getTopArtistsResponse = await getTopArtists(accessToken)
+      const cacheControlHeaders = new CacheHeaders(undefined, 'netlify')
 
       const successResponse = new Response(
         JSON.stringify({
@@ -52,7 +54,10 @@ export default async function getSpotifyData(req) {
         }),
         {
           status: 200,
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...cacheControlHeaders,
+          },
         }
       )
 
