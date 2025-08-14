@@ -50,11 +50,6 @@ export default async function getSpotifyData(req) {
         'netlify'
       )
 
-      console.log('Cache control headers: ', cacheControlHeaders)
-      console.log('Testing structure of headers obj: ', {
-        ...cacheControlHeaders,
-      })
-
       const successResponse = new Response(
         JSON.stringify({
           getRecentTracksResponse,
