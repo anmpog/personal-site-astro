@@ -63,10 +63,7 @@ export default async function getSpotifyData(req) {
         }),
         {
           status: 200,
-          headers: {
-            'Content-Type': 'application/json',
-            ...cacheControlHeaders,
-          },
+          headers: cacheControlHeaders,
         }
       )
 
