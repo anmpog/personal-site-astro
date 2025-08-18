@@ -1,11 +1,6 @@
-import { useState, useEffect } from 'preact/hooks'
-import SpotifyLogo from '../assets/svg/SpotifyLogo'
 import AlertIcon from '../assets/svg/AlertIcon'
-
-const myHeaders = new Headers({
-  'Content-Type': 'application/json',
-  Accept: 'application/json',
-})
+import SpotifyLogo from '../assets/svg/SpotifyLogo'
+import useFetch from '../utils/useFetch'
 
 const TopArtistsSkeleton = () => {
   return (
@@ -52,17 +47,6 @@ const RecentTracksSkeleton = () => {
   )
 }
 
-const SpotifyErrorMessage = ({ message }) => {
-  return (
-    <div class='flex h-28 items-center gap-2 overflow-hidden rounded-sm border border-red-400 bg-red-200 p-2 align-middle md:rounded-sm'>
-      <div class='aspect-square h-8 w-auto self-center text-red-500 sm:h-12'>
-        <AlertIcon />
-      </div>
-      <p class='m-0 italic'>{message}</p>
-    </div>
-  )
-}
-
 const ClientErrorMessage = ({
   message = 'Something went wrong on the client...',
 }) => {
@@ -82,81 +66,28 @@ const ClientErrorMessage = ({
 }
 
 const MySpotifyData = () => {
-  const [recentTracksResponseData, setRecentTracksResponseData] = useState(null)
-  const [topArtistsResponseData, setTopArtistsResponseData] = useState(null)
-  const [spotifyDataLoading, setSpotifyDataLoading] = useState(false)
-  const [spotifyError, setSpotifyError] = useState({
-    getRecentTracksError: null,
-    getTopArtistsError: null,
-  })
-  const [clientError, setClientError] = useState(null)
+  const {
+    data: topArtistsResponseData,
+    loading: topArtistsLoading,
+    error: topArtistsError,
+  } = useFetch('/api/getTopArtists', 'GET')
 
-  // I want respective skeletons to show immediately (because fetch wont
-  // trigger until useEffect fires. I want skeletons to remain if there
-  // is no (respective) error or data – indicating that fetching has not
-  // completed. Successful fetch should result in either data or an error.
-  // Loading state is always set to false after attempting to fetch data.
-  // I think technically it doesn't matter if the spotifyDataLoading value
-  // is referenced because the other two variables reliably indicate the
-  // desired behavior...but I love to doubt myself and honestly I'm tired
-  // of thinking about this sh!t right now so it stays. But at least I'm using
-  // derived state?
+  const {
+    data: recentTracksResponseData,
+    loading: recentTracksLoading,
+    error: recentTracksError,
+  } = useFetch('/api/getRecentTracks', 'GET')
+
   const displayTopArtistsSkeleton =
-    (!topArtistsResponseData && !spotifyError.getTopArtistsError) ||
-    spotifyDataLoading
+    (!topArtistsResponseData && !topArtistsError) || topArtistsLoading
 
   const displayRecentTracksSkeleton =
-    (!recentTracksResponseData && !spotifyError.getTopArtistsError) ||
-    spotifyDataLoading
-
-  useEffect(() => {
-    setSpotifyDataLoading(true)
-    fetch(`/api/getSpotifyData`, {
-      headers: myHeaders,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (!data.success) {
-          setClientError(data.message)
-        } else {
-          const { getTopArtistsResponse, getRecentTracksResponse } = data
-
-          if (getRecentTracksResponse.success) {
-            setRecentTracksResponseData(getRecentTracksResponse.data)
-          } else if (!getRecentTracksResponse.success) {
-            setSpotifyError((prev) => ({
-              ...prev,
-              getRecentTracksError: getRecentTracksResponse.message,
-            }))
-          }
-
-          if (getTopArtistsResponse.success) {
-            setTopArtistsResponseData(getTopArtistsResponse.data)
-          } else if (!getTopArtistsResponse.success) {
-            setSpotifyError((prev) => ({
-              ...prev,
-              getTopArtistsError: getTopArtistsResponse.message,
-            }))
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(error.message)
-        setClientError('Client Error')
-      })
-      .finally(() => {
-        setSpotifyDataLoading(false)
-      })
-  }, [])
-
-  if (clientError) {
-    return <ClientErrorMessage message={clientError} />
-  }
+    (!recentTracksResponseData && !recentTracksError) || recentTracksLoading
 
   return (
     <div class='flex flex-col gap-6'>
       <div>
-        <div class='bg-heading mb-2 flex flex-col justify-end border border-slate-900 p-1 sm:p-2'>
+        <div class='mb-2 flex flex-col justify-end border border-slate-900 bg-heading p-1 sm:p-2'>
           <h2 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Top Artists
             <div class='inline-block h-6 w-6 text-neutral-100'>
@@ -196,13 +127,13 @@ const MySpotifyData = () => {
           </div>
         ) : null}
 
-        {spotifyError?.getTopArtistsError ? (
-          <SpotifyErrorMessage message={spotifyError.getTopArtistsError} />
+        {topArtistsError ? (
+          <ClientErrorMessage message={topArtistsError} />
         ) : null}
       </div>
 
       <div>
-        <div class='bg-heading mb-2 flex flex-col justify-end border border-slate-900 p-1 sm:p-2'>
+        <div class='mb-2 flex flex-col justify-end border border-slate-900 bg-heading p-1 sm:p-2'>
           <h2 class='mt-[1.5em] flex items-center gap-2 text-neutral-100'>
             Recent Tracks
             <div class='h-6 w-6 text-neutral-100'>
@@ -255,8 +186,8 @@ const MySpotifyData = () => {
           </div>
         ) : null}
 
-        {spotifyError?.getRecentTracksError ? (
-          <SpotifyErrorMessage message={spotifyError.getRecentTracksError} />
+        {recentTracksError ? (
+          <ClientErrorMessage message={recentTracksError} />
         ) : null}
       </div>
     </div>
