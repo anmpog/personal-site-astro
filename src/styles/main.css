@@ -146,6 +146,14 @@
     text-decoration-color: var(--color-primary);
   }
 
+  blockquote p {
+    font-size: 0.75em;
+    border-left: 12px solid var(--color-primary);
+    padding: 1rem;
+    max-width: 100%;
+    background-color: #ccb58f;
+  }
+
   /* Scale headings - small */
   h1 {
     font-size: var(--fs-small-h1);
@@ -161,10 +169,6 @@
   }
   h5 {
     font-size: var(--fs-small-h5);
-  }
-
-  .astro-code {
-    @apply rounded-sm px-4 py-6 text-sm;
   }
 
   :not(pre) > code {
@@ -202,10 +206,6 @@
       font-size: var(--fs-medium-h5);
     }
 
-    .astro-code {
-      @apply rounded-sm border px-4 py-6 text-sm;
-    }
-
     :not(pre) > code {
       padding: 0.25em 0.5em;
       font-size: var(--fs-medium-small);
@@ -235,10 +235,6 @@
     }
     h5 {
       font-size: var(--fs-desktop-h5);
-    }
-
-    .astro-code {
-      @apply text-base;
     }
 
     :not(pre) > code {

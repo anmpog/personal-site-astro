@@ -1,9 +1,9 @@
 ---
+import '../styles/main.css'
 import capitalize from 'lodash.capitalize'
 import Footer from '../components/Footer.astro'
 import Navigation from '../components/Navigation.astro'
 import { siteMetaData } from '../data/site-data.json'
-import '../styles/main.css'
 const { contentDescription } = Astro.props
 const url =
   Astro.url.pathname === '/' ? 'home' : Astro.url.pathname.replace('/', '')

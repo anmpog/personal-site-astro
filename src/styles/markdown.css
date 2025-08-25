@@ -1,0 +1,21 @@
+.markdown-wrapper a {
+  text-decoration: underline;
+  font-weight: bold;
+  text-decoration-color: var(--color-primary);
+  text-decoration-thickness: 0.1em;
+  background-size: 100% 200%;
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-background) 50%,
+    var(--color-primary) 50%
+  );
+  transition:
+    background-position 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+.markdown-wrapper a:hover,
+.markdown-wrapper a:focus {
+  background-position: 0 100%;
+  color: var(--color-background);
+}
