@@ -121,14 +121,12 @@
     max-width: 65ch;
   }
 
-  ul,
-  li {
-    list-style: inside;
+  ul {
+    list-style: disc outside;
   }
 
-  ul > li + li,
-  ol > li + li {
-    margin-top: 0.75em;
+  ol {
+    list-style: decimal outside;
   }
 
   ul,
@@ -136,8 +134,13 @@
     padding-left: 1rem;
   }
 
-  li {
-    list-style: outside disc;
+  ul > li + li,
+  ol > li + li {
+    margin-top: 0.75em;
+  }
+
+  ul li {
+    list-style: outside;
   }
 
   a {
