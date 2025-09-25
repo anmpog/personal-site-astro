@@ -103,7 +103,7 @@ const MySpotifyData = () => {
         {displayTopArtistsSkeleton ? <TopArtistsSkeleton /> : null}
 
         {topArtistsResponseData ? (
-          <div class='md: grid grid-cols-2 gap-4 sm:grid-cols-3'>
+          <div class='grid grid-cols-2 gap-4 sm:grid-cols-3'>
             {topArtistsResponseData.map((artist) => (
               <a
                 key={artist.artistName}
