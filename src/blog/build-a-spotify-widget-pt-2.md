@@ -69,6 +69,8 @@ Bruno does have a [guide on the Authorization Code Grant Type](https://docs.useb
 Your collection's Vars panel should look like this when you are done:
 ![A screenshot of the properly formatted Collection Variables panel](../assets/images/blog/build-a-spotify-widget-pt-2/spotify-widget-collection-vars-panel.png)
 
+An important thing to note is the value of the `scopes` variable. The `scopes` variable [determines what resources we can access](https://developer.spotify.com/documentation/web-api/concepts/scopes) from the Spotify API, and is encoded into the authorization tokens we get from the Spotify auth server. If you try to access resources that do not fall under the scope we set in our `scopes` variable, we must add the appropriate scope to this variable. The `user-top-read` scope will allow us to request data about a user's top artists.
+
 > AI told me that the name of the UI element commonly represented by 3 dots (...) can be referred to as a meatball menu. Whether that's true or not, I really like that name for it so that's what I'm going to call it from now on.
 
 ## Create an Authorization Request in Bruno
@@ -114,7 +116,7 @@ In the next steps, we will talk about how our application will work, and what we
 
 Of the two tokens we get back from successfully completing the authorization flow, the one we want to store is the `refresh token`. In the root of your project. create a file `.env`. At this point your project should look like:
 
-```bash
+```bash "├── .env"
 .
 ├── .env
 ├── .gitignore
@@ -138,7 +140,7 @@ Of the two tokens we get back from successfully completing the authorization flo
 
 After creating your `.env` file, make sure to update your `.gitignore` to avoid accidentally committing any secrets to source control. My `.gitignore` file looks like this:
 
-```bash "# environment variables" ".env.*"
+```bash "# environment variables" ".env*"
 # build output
 dist/
 # generated types
@@ -155,7 +157,7 @@ pnpm-debug.log*
 
 
 # environment variables
-.env.*
+.env*
 
 # macOS-specific files
 .DS_Store
@@ -190,6 +192,6 @@ In the next part of the guide, I will show how I built a serverless function to 
 
 ## Additional Resources
 
-1. This [post by Thomas Moran](https://thomasmoran.dev/snippets/spotify-currently-playing/spotify-currently-playing/) details how to go through the authorization and authentication process without the use of Automations provided by an API client.
+1. This [post by Thomas Moran](https://thomasmoran.dev/snippets/spotify-currently-playing/spotify-currently-playing/) details how to go through the authorization and authentication process without the use of automations provided by an API client.
 
 2. This [Medium article by Alagappan M](https://medium.com/@alagappan.dev/create-a-now-playing-widget-using-the-spotify-web-api-in-react-a6cb564ed923) details how to manually step through the Authentication and Authorization process, and details building a similar widget to display a "Now Playing" widget.
