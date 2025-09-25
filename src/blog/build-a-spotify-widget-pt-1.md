@@ -2,7 +2,7 @@
 title: Building a Spotify Widget With Astro, Preact and Netlify Functions Pt. 1
 slug: building-a-spotify-widget-with-astro-preact-and-netlify-functions-pt-1
 pubDate: 2025-10-08
-description: A description of how I built a simple Spotify bot using Astro, Preact, and Netlify's serverless functions.
+description: Scaffolding an Astro project to begin building a Spotify widget that can add personality to your portfolio site.
 author: Anthony Pogliano
 tags: [serverless, netlify, preact, react]
 ---
@@ -187,7 +187,7 @@ export default function getTopArtists() {
       artists: [
         'Faux-sensitive yoga-bro music',
         'Taylor Swift is just OK',
-        'Bland-Radio Friendly Popstar',
+        'Bland Radio-Friendly Popstar',
       ],
     },
   }
@@ -284,4 +284,4 @@ The docs for Netlify CLI show more of the [available commands](https://docs.netl
 
 ## Wrapping Up
 
-This article covered scaffolding an app using Astro and Preact to build a user interface, and Netlify's CLI to build and serve a serverless function that stands in for a more traditional rest API endpoint. At this point you should have a working, albeit minimal, Astro/Preact frontend with a "back end" that sends you some hard-coded data. The next article will focus on fetching some of our personalized data from Spotify and rendering it in our UI using the parts of the app we've already built.
+This article covered scaffolding an app using Astro and Preact to build a user interface, and Netlify's CLI to build and serve a serverless function that stands in for a more traditional rest API endpoint. At this point you should have a working, albeit minimal, Astro/Preact frontend with a "back end" that sends you some hard-coded data. The next articles will focus on authorizing our application and fetching some of our personalized data from Spotify and rendering it in our UI using the parts of the app we've already built.
