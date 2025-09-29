@@ -11,15 +11,17 @@ In the previous post, I walked you through setting up an Astro project that we w
 
 This walkthrough assumes you have a Spotify account – after all, if you didn't, why would you be trying to make your Spotify data publicly visible? I also make use of an API client to get a refresh token from Spotify. In my case, I use the [Bruno API client](https://www.usebruno.com/), but you can use any client you want, or even just `curl` from the command line if you like. I like using an API client because it simplifies the process for requesting an access token and a refresh token, which makes our lives easier as developers!
 
+I built this mini-application after I had built and deployed a static website to Netlify, so I also decided to make use of APIs provided by Netlify in order to make this work. If you are using a different hosting platform, you will have to determine if your platform provides similar APIs to those provided by Netlify. This article will walk through the process of retrieving access tokens for Spotify, but the architectural choices I made may not pertain to you!
+
 ## How Our Application Will Work
 
 In this case, the refresh token that we will get back from the Spotify authentication and authorization handshake is long-lived. To my knowledge, it won't automatically expire due to a time limit. To me, it felt like environment variables would be a good fit for storing a token that we don't expect to expire. Netlify provides a convenient API for storing and consuming [environment variables](https://docs.netlify.com/build/configure-builds/environment-variables/), which is another argument in favor of using an environment variable to store our refresh token.
 
-Access tokens, on the other hand, are _not_ long-lived. The ones we get from Spotify expire every hour. In a more robust (read: professional) application, you would store this access token in some way and check if it was expired before issuing requests to the protected resources trying to access. If the token is not expired, you can fire the request immediately to the API, but if the token is expired, you use the refresh token to get another access token, and then use the new access token as you would expect. In one case, you save yourself an additional request to the refresh token endpoint.
+Access tokens, on the other hand, are _not_ long-lived. The ones we get from Spotify expire every hour. In a more robust (read: professional) application, you would store this access token in some way and check if it was expired before issuing requests to the protected resources we are trying to access. If the access token is not expired, you can fire the request immediately to the API. If the access token is expired, you use the refresh token to get another access token, and then use this new access token as you would expect. In the case of an unexpired access token, you save yourself an additional request to the refresh token endpoint.
 
-We must consider the limitations of serverless functions. Netlify’s serverless functions don’t keep state reliably, so while we could theoretically cache access tokens briefly to save ourselves some requests to the refresh token endpoint, cold starts mean we should expect to request new access tokens frequently anyway.
+This brings us to one of the key limitations of serverless functions: Netlify’s serverless functions do not keep state reliably, so while we could theoretically cache access tokens briefly to save ourselves some requests to the refresh token endpoint, cold starts mean we should expect to request new access tokens frequently anyway.
 
-With those considerations in mind, it is most straightforward to use the refresh token endpoint to obtain a new access token every time we want to access the Spotify API. While this means that we are _always_ making at least two requests when we are trying to get data from a Spotify API endpoint, I can live with that because it doesn't cause any significant problems. While it adds some latency and makes the UX a little sluggish, that's a tradeoff I'm comfortable with given the nature of how I'm using this application. My personal site gets little traffic, and I have also implemented a caching strategy that should help reduce the number of times I'm actually issuing requests to Spotify.
+With those considerations in mind, it is most straightforward to use the refresh token endpoint to obtain a new access token every time we want to access the Spotify API. While this means that we are _always_ making at least two requests when we are trying to get data from a Spotify API endpoint, I can live with that because it doesn't cause any significant problems. While this will add some latency and makes the UX a little sluggish, that's a tradeoff I'm comfortable with given the nature of how I'm using this application. My personal site gets little traffic, and I have also implemented a HTTP caching strategy that helps reduce the number of times I'm actually issuing requests to Spotify.
 
 ## Registering An App on Spotify
 
@@ -35,7 +37,7 @@ Before you can consume the Web API you need to register an application on your [
 
   - The use of `localhost` in the redirect URI field is not allowed. Instead we must use `http://127.0.0.1:<port>`. The default address that Netlify CLI spins up a server at is `http://localhost:8888`, so we should make our address: `http://127.0.0.1:8888/callback`.
 
-- You can ignore the "Bundle IDs" and "Android Packages" fields/leave them blank.
+- You can ignore the "Bundle IDs" and "Android Packages" fields and leave them blank.
 - For the purposes of this tutorial, in the "APIs Used" section select only the "Web API" option.
 
 After you've registered an application with the Spotify developer portal, you will want to make note of your application's Client ID, as well as your Client Secret. If you don't feel like writing them down, they will remain available in the Spotify developer portal for later viewing.
@@ -48,7 +50,7 @@ The auth flow we are using has two parts:
 
 1. In the first part of the handshake, the user (ourselves, in this case) must authorize the application by providing our Spotify account credentials and confirming the access level(s) we are granting the application. After a successful authorization of the application, Spotify will return to us an authorization code.
 
-2. After we receive the authorization code, we must then send a `POST` request to a specific endpoint including the authorization code we got from the authorization step. If this POST request is successful, we will receive an access token and a refresh token in return. Once we have these tokens, we can use them to request data from protected endpoints on the Spotify API.
+2. After we receive the authorization code, we must then send a `POST` request to a specific endpoint including the authorization code we got from the authorization step. If this request is successful, we will receive an access token and a refresh token in return. Once we have these tokens, we can use them to request data from protected endpoints on the Spotify API.
 
 ## Creating a Collection in Bruno
 
@@ -66,20 +68,20 @@ Bruno does have a [guide on the Authorization Code Grant Type](https://docs.useb
    5. Create an `access_token_url` variable and set it equal to `https://accounts.spotify.com/api/token`
    6. Proofread your variable names and values, and when everything looks good, click the save button.
 
+> AI told me that the name of the UI element commonly represented by 3 dots (...) can be referred to as a meatball menu. Whether that's true or not, I really like that name for it so that's what I'm going to call it from now on.
+
 Your collection's Vars panel should look like this when you are done:
-![A screenshot of the properly formatted Collection Variables panel](../assets/images/blog/build-a-spotify-widget-pt-2/spotify-widget-collection-vars-panel.png)
+![A screenshot of the properly formatted Collection Variables panel in the Bruno API client.](../assets/images/blog/build-a-spotify-widget-pt-2/spotify-widget-collection-vars-panel.png)
 
 An important thing to note is the value of the `scopes` variable. The `scopes` variable [determines what resources we can access](https://developer.spotify.com/documentation/web-api/concepts/scopes) from the Spotify API, and is encoded into the authorization tokens we get from the Spotify auth server. If you try to access resources that do not fall under the scope we set in our `scopes` variable, we must add the appropriate scope to this variable. The `user-top-read` scope will allow us to request data about a user's top artists.
-
-> AI told me that the name of the UI element commonly represented by 3 dots (...) can be referred to as a meatball menu. Whether that's true or not, I really like that name for it so that's what I'm going to call it from now on.
 
 ## Create an Authorization Request in Bruno
 
 Once we have some variables defined, we can create a request to authorize our application.
 
-1. In the collections panel on the left side of the Bruno app, hover your `Spotify Widget Example` collection and click the meatball menu, then click "New Request". Name the request whatever you like, but I named mine `Request Authorization`. Set the URL field to `https://accounts.spotify.com/authorize?`, and make sure the request type is a `GET` request.
+1. In the collections panel on the left side of the Bruno app, hover your `Spotify Widget Example` collection and click the meatball menu, then click "New Request". Name the request whatever you like, but I named mine `Request Authorization`. Set the URL field to `https://accounts.spotify.com/authorize`, and make sure the request type is a `GET` request.
 2. If Bruno does not open a tab for your new request in the main content area of the Bruno app, click the request to do so. Navigate to the "Auth" submenu of the request in the main content area of the Bruno app.
-3. Under the Auth submenu, make sure that `OAuth2.0` is selected. Set the "Grant Type" to "Authorization Code".
+3. Under the Auth submenu, make sure that `OAuth2.0` is selected. Set the Grant Type to "Authorization Code".
 4. We are going to use the variables we set earlier to populate the fields Bruno wants us to provide. To access one of our variables, we use two curly brackets with the name of the variable like so: `{{your_variable_name}}`
 
    - For the "Callback URL" field, set the value to `{{redirect_uri}}`
@@ -90,7 +92,7 @@ Once we have some variables defined, we can create a request to authorize our ap
    - For the "Scope" field, set the value to `{{scopes}}`
 
 Your request's Auth panel should look similar to this when you're done:
-![A screenshot of the properly formatted request Auth panel](../assets/images/blog/build-a-spotify-widget-pt-2/spotify-widget-collection-auth-panel.png)
+![A screenshot of the properly formatted request Auth panel in the Bruno API client](../assets/images/blog/build-a-spotify-widget-pt-2/spotify-widget-collection-auth-panel.png)
 
 ## Authorizing our Application
 
@@ -109,8 +111,6 @@ If everything is formatted correctly, Bruno's integrated browser will navigate t
   "scope": "user-top-read"
 }
 ```
-
-In the next steps, we will talk about how our application will work, and what we will do with the tokens we get back from a successful authorization of our application.
 
 ## Storing Our Refresh Token For Development
 
@@ -170,7 +170,7 @@ pnpm-debug.log*
 
 ```
 
-In your `.env` file, store your app's client secret, client ID, and the refresh token you got back from successfully authenticating my app.
+In your `.env` file, store your app's client secret, client ID, and the refresh token you got back from successfully authenticating your application.
 
 Your `.env` file should look similar to this when you are done:
 
@@ -184,14 +184,14 @@ We will later use these variables to make requests to the Spotify API. We can al
 
 ## Wrapping Up
 
-In this part of the tutorial, we registered and configured our application on the Spotify API developer portal. Then, we created and configured a collection in Bruno, and subsequently created a request we can use to authorize our Spotify application and automatically procure a refresh token and access token.
+In this part of the tutorial, we registered and configured our application on the Spotify API developer portal. Then, we created and configured a collection in Bruno, and subsequently created a request we can use to authorize our Spotify application and procure a refresh token and access token.
 
-We created a `.env` file in which we stored some important variables that will be used in our requests to the Spotify API.
+We then created a `.env` file in which we stored some important variables that will be used by our sererless function when it issues requests to the Spotify API.
 
 In the next part of the guide, I will show how I built a serverless function to fetch data from the Spotify API using our refresh token and some of the application secrets we were given when we registered our application on the Spotify developer portal.
 
 ## Additional Resources
 
-1. This [post by Thomas Moran](https://thomasmoran.dev/snippets/spotify-currently-playing/spotify-currently-playing/) details how to go through the authorization and authentication process without the use of automations provided by an API client.
+1. This [post by Thomas Moran](https://thomasmoran.dev/snippets/spotify-currently-playing/spotify-currently-playing/) details how to go through the authorization and authentication process without the use of automations provided by an API client like Bruno or Postman.
 
 2. This [Medium article by Alagappan M](https://medium.com/@alagappan.dev/create-a-now-playing-widget-using-the-spotify-web-api-in-react-a6cb564ed923) details how to manually step through the Authentication and Authorization process, and details building a similar widget to display a "Now Playing" widget.
