@@ -6,7 +6,7 @@ export const refreshTokenOptions = {
     'Content-Type': 'application/x-www-form-urlencoded',
     Authorization:
       'Basic ' +
-      new Buffer.from(
+      Buffer.from(
         process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET
       ).toString('base64'),
   },
