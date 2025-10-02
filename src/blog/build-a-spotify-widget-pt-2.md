@@ -1,7 +1,7 @@
 ---
 title: Building a Spotify Widget With Astro, Preact and Netlify Functions Pt. 2
 slug: building-a-spotify-widget-with-astro-preact-and-netlify-functions-pt-2
-pubDate: 2025-10-25
+pubDate: 2025-08-25
 description: Registering an application on Spotify's developer portal, and using Bruno to build and send a request for authorization.
 author: Anthony Pogliano
 tags: [serverless, netlify, preact, react]

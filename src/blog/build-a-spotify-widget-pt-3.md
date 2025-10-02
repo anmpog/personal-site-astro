@@ -1,7 +1,7 @@
 ---
 title: Building a Spotify Widget With Astro, Preact and Netlify Functions Pt. 3
 slug: building-a-spotify-widget-with-astro-preact-and-netlify-functions-pt-3
-pubDate: 2025-11-15
+pubDate: 2025-09-15
 description: Building a Netlify serverless function to fetch data from the Spotify API and return it to the client.
 author: Anthony Pogliano
 tags: [serverless, netlify, preact, react]
@@ -284,20 +284,20 @@ At this point, if we click our "Fetch Data" button, we should see:
 
 ## Next Steps
 
-Across this series, I've explained how to register an application on Spotify's API, authorizing our application using an API client and handling authorization tokens to get access to protected endpoints on Spotify's web API. I've also detailed the decisions that informed the way we built the application.
+Across this series, I've explained how to register an application on Spotify's API, authorizing our application using an API client and handling authorization tokens to get access to protected endpoints on Spotify's web API, and how to fetch and render data in our client-side application. I've also detailed the reasoning behind the decisions I made about how this application was built.
 
 There are some more considerations to make. Right now, our UI does not really reflect a very realistic use-case: we probably want to load our data automatically after the containing page or element is loaded on our site. We likely also want to style the data that comes back from Spotify in a little more aesthetically pleasing manner.
 
 There are also optimizations we can make to our serverless function that felt outside the scope of this article. I want to mention a few of them in case you want to keep hacking on this mini-app. I myself need to make a few of these optimizations!
 
-One such optimization would be to take advantage of caching behavior – both in our browser, as well as on Netlify's CDN. Netlify's [documentation on caching](https://docs.netlify.com/build/caching/caching-overview/#default-caching-behavior) details the special headers you can set to make the Netlify CDN aware of which data you want to cache.
+One such optimization would be to take advantage of caching behavior – both in our browser, as well as on Netlify's CDN. Netlify's [documentation on caching](https://docs.netlify.com/build/caching/caching-overview/#default-caching-behavior) details the special headers you can set to make the Netlify CDN aware of which data you want to cache. You can also cache resources on the browser to keep things snappy when people are tabbing around your site.
 
-One thing to be aware of when making caching optimizations is that testing the caching headers will require you to deploy your application – the Netlify CLI does not give you feedback on how your Netlify-specific cache control headers are working.
+One thing to be aware of when making caching optimizations is that testing the Netlify-specific caching headers will require you to deploy your application as the Netlify CLI does not give you feedback on how your Netlify-specific cache control headers are working.
 
-In Part 2 of this article series, I discussed the pitfalls of using an in-memory cache with serverless functions to cut down on the need to request access tokens on _every_ request to Spotify. The primary issue is that Netlify functions do not reliably hold state. After a serverless function executes, its execution context persists for a short (but unpredictable) amount of time, meaning that our in-memory cache would be unreliable.
+In Part 2 of this article series, I discussed the pitfalls of using an in-memory cache with serverless functions to cut down on the need to request access tokens on _every_ request to Spotify. The primary issue is that Netlify functions do not reliably hold state. After a serverless function executes, its execution context persists for a short (but unpredictable) amount of time, meaning that our hypothetical. in-memory cache would be unreliable.
 
-An optimization that might address the unreliability of serverless functions' short-lived execution contexts would be using [Netlify Blobs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/) in our Netlify functions to achieve caching the access tokens issued by Spotify's auth server. Netlify Blobs provide us a way to persist data in a key/value format that outlasts the lifetime of a serverless function's execution context. This could give us a mechanism for storing access tokens and cutting down on the need to ask Spotify's authorization server for a new access token before every single resource request we make to the web API.
+An optimization that might address the unreliability of serverless functions' short-lived execution contexts would be using [Netlify Blobs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/) in our Netlify functions to achieve caching the access tokens issued by Spotify's auth server. Netlify Blobs provide us a way to persist data in a key/value format that outlasts the lifetime of a serverless function's execution context. This could give us a mechanism for storing access tokens and cutting down on the need to ask Spotify's authorization server for a new access token before every single resource request we make to the Spotify API.
 
-On top of those optimizations, I'm sure there are patterns that are more robust, more maintainable, simpler to parse... that's the beauty of coding. There's no such thing as perfect! However, I think I have presented a good, if long-winded, explanation of how to consume this API.
+On top of those optimizations, I'm sure there are pattern to implement that are more robust, more maintainable, simpler to parse... that's the beauty of coding. There's no such thing as perfect! However, I think I have presented a good, if long-winded, explanation of how to consume this API!
 
 Stay tuned for future articles!

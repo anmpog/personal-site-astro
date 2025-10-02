@@ -1,7 +1,7 @@
 ---
 title: Building a Spotify Widget With Astro, Preact and Netlify Functions Pt. 1
 slug: building-a-spotify-widget-with-astro-preact-and-netlify-functions-pt-1
-pubDate: 2025-10-08
+pubDate: 2025-08-08
 description: Scaffolding an Astro project to begin building a Spotify widget that can add personality to your portfolio site.
 author: Anthony Pogliano
 tags: [serverless, netlify, preact, react]
