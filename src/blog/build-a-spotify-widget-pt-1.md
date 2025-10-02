@@ -1,7 +1,7 @@
 ---
 title: Building a Spotify Widget With Astro, Preact and Netlify Functions Pt. 1
 slug: building-a-spotify-widget-with-astro-preact-and-netlify-functions-pt-1
-pubDate: 2025-10-08
+pubDate: 2025-08-08
 description: Scaffolding an Astro project to begin building a Spotify widget that can add personality to your portfolio site.
 author: Anthony Pogliano
 tags: [serverless, netlify, preact, react]
@@ -9,7 +9,7 @@ tags: [serverless, netlify, preact, react]
 
 When I rebuilt my personal site in Astro, one of my main goals was to show a little more personality – and of course I wanted to find a little programming project that might indicate that I'm not a totally clueless developer. I love music (sooo unique) so I landed on building a Spotify widget that would make it easier to share what I've been listening to recently.
 
-## My Set Up
+## The Stack
 
 As I detail the setup I used to build this widget, bear in mind that a lot of parts of this are really flexible. One of the reasons that I think this writeup might be useful to others is that Astro is currently a popular choice for building out personal/portfolio sites. In this article, we will start with mock data, but later we will use Spotify's Web API to fetch real data about your listening history.
 
@@ -18,11 +18,11 @@ With that in mind, the things I used to build this:
 - Astro, which is a static site generator that emphasizes a focus on using plain HTML and CSS for building sites. JavaScript is opt-in. Works with various frameworks.
 - Spotify's Web API for providing recent data about what I am listening to
 - Preact for building reactive user interface inside an Astro site
-- Netlify: hosting platform for front-end sites/apps, has nice tools for local development, generous free tier, supports serverless functions for free
+- Netlify, which is a hosting platform for front-end sites/apps, has nice tools for local development, a generous free tier, and supports serverless functions for free
 
 ## Install Astro
 
-First thing first: you need to [install Astro](https://docs.astro.build/en/install-and-setup/). The installation wizard will scaffold a project for you, including a basic TypeScript configuration. The documentation suggests that you can add dependencies (like Preact) from the get-go, but I have had mixed results – so I prefer to add them manually later.
+First thing's first: you need to [install Astro](https://docs.astro.build/en/install-and-setup/). The installation wizard will scaffold a project for you, including a basic TypeScript configuration. The documentation suggests that you can add dependencies (like Preact) from the get-go, but I have had mixed results – so I prefer to add them manually later.
 
 In my case, I navigated to a folder where I wanted to build a project, and ran the following command:
 
@@ -67,9 +67,9 @@ Afterwards, you will have to log in to your Netlify account (or create one). The
 
 Netlify CLI expects a particular file structure when using their implementation of serverless functions. In your project's root directory add a `./netlify/functions` directory. For this demo, I'm just going to make one "endpoint" called `getTopArtists`, so I added a file to contain this function as well.
 
-I also added a `./src/components` folder to contain the UI that will fetch and display the data from Spotify. This will be a component in the style of React, so make a file with a `.jsx` file extension. In my case, the UI will be responsible for fetching and rendering some of my most-listened-to artists on Spotify, so I named it `GetTopArtists.jsx`
+I also added a `./src/components` folder to contain the UI that will trigger requests for data from Spotify. This will be a Preact component, so make a file with a `.jsx` file extension. In my case, the UI will be responsible for making requests to the serverless function we define, and then rendering the data the serverless functions returns. Ultimately, I will be fetching a list of my favorite artists over the last six months according to Spotify, so I named it `GetTopArtists.jsx`.
 
-Finally, I like to add a redirect so I can point my queries to something a little more ergonomic than `/netlify/functions/<someFunction>`. Netlify will let you [define redirects](https://docs.netlify.com/build/configure-builds/file-based-configuration/#redirects) in a `netlify.toml` file.
+Finally, I like to add a redirect so I can point my queries to something a little more ergonomic than `/.netlify/functions/<functionName>`. Netlify will let you [define redirects](https://docs.netlify.com/build/configure-builds/file-based-configuration/#redirects) in a `netlify.toml` file.
 
 In your project's root directory, make a `netlify.toml` file and put the following inside it:
 
@@ -80,7 +80,7 @@ In your project's root directory, make a `netlify.toml` file and put the followi
   status=200
 ```
 
-This creates a simple proxy, allowing us to point our queries at `/api/<functionName>`. You can skip this step if you want, you'll just send your queries to `netlify/functions/<functionName>` instead.
+This creates a simple proxy, allowing us to point our queries at `/api/<functionName>`. You can skip this step if you want, you'll just send your queries to `/.netlify/functions/<functionName>` instead.
 
 Notice that the redirect points to `/.netlify/` (with a dot), which is where the CLI compiles and serves functions, even though you write them in `/netlify/`.
 
@@ -107,7 +107,7 @@ After these steps, your project structure should look roughly like this:
 
 ## Install Preact
 
-I felt like using full-blown React was overkill for this project. React delivers a much bigger bundle to the browser than Preact, and Preact offers familiar APIs for building reactive components. To add [Preact for use in Astro](docs.astro.build/en/guides/integrations-guide/preact/), take a look at the docs. In your project directory, you should be able to run the following command to install (and configure) Preact:
+I felt like using full-blown React was overkill for this project. React delivers a much bigger bundle to the browser than Preact does, and Preact offers familiar APIs for building reactive components. The docs detail how you can add [Preact for use in Astro](docs.astro.build/en/guides/integrations-guide/preact/). In your project directory, you should be able to run the following command to install (and configure) Preact:
 
 ```bash
 yarn astro add preact
@@ -115,7 +115,7 @@ yarn astro add preact
 
 The installation wizard should modify your `tsconfig.json` and your `astro.config.mjs` for you – but verify just in case. If the files are unmodified, the documentation shows the steps to take to integrate Preact in your Astro project. After you run the command to install Preact, your `tsconfig.json` should look like:
 
-```json
+```json ""jsxImportSource": "preact""
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
@@ -129,7 +129,7 @@ The installation wizard should modify your `tsconfig.json` and your `astro.confi
 
 And your `astro.config.mjs` file should look like:
 
-```js
+```js "integrations: [preact()]"
 // @ts-check
 import { defineConfig } from 'astro/config'
 
@@ -141,9 +141,9 @@ export default defineConfig({
 })
 ```
 
-## Connecting the UI to our Serverless Function
+## Connecting the UI to Our Serverless Function
 
-The function in `netlify/functions/getTopArtists.mjs` will act as an API endpoint – you will send requests to this "endpoint" and it will respond with data of some kind. As a first step in building a new feature, I always like to wire up my UI to the endpoint and get some sort of verification that I can send requests and receive data in the client in return.
+The function defined in `netlify/functions/getTopArtists.mjs` will act as an API endpoint. You will send requests to this "endpoint" and it will respond with data of some kind. As a first step in building a new feature, I always like to "wire up" my UI to the endpoint and get some sort of verification that I can send requests from and receive data in the client in return.
 
 The [way Astro works conceptually](https://docs.astro.build/en/concepts/islands/) isn't really the main point of this post – but by default, Astro components are rendered as only HTML and CSS. In our case, we want to use JavaScript (by way of Preact) to add interactivity. We can write a JSX component and use a special, Astro-provided client directive to opt-in to using JavaScript in our application.
 
@@ -227,19 +227,19 @@ import GetTopArtists from '../components/GetTopArtists'
 
 Notice that when we embed our `<GetTopArtists />` component in the HTML found in `index.astro` we passed what kind of looks like a prop in React: `client:load`. This is what's known as a [template directive](https://docs.astro.build/en/reference/directives-reference/#clientload) in Astro. These directives give instructions to the compiler about what to do with certain components.
 
-In this case, `client:load` is a [client directive](https://docs.astro.build/en/reference/directives-reference/#client-directives) that tells Astro to send and hydrate a rendered component's JavaScript to the browser as soon as possible. Other directives allow you to defer sending and hydrating JavaScript to speed up initial rendering, allowing your site to display critical content more quickly and put off fetching intensive resources until after the site is visible and high-priority interfaces are usable. In this instance, failing to use the `client:load` directive will cause none of the JavaScript needed to operate our component to be delivered to the browser, so our component won't work without it.
+More specifically, `client:load` is a [client directive](https://docs.astro.build/en/reference/directives-reference/#client-directives) that tells Astro to send and hydrate a rendered component's JavaScript to the browser as soon as possible. Other directives are available to give you fine-grained control of the way you load and hydrate JavaScript in your framework components. In this instance, failing to use the `client:load` directive will cause none of the JavaScript needed to operate our component to be delivered to the browser, so our component won't work without it.
 
 ## Testing The Basic Implementation
 
-To test out that we've wired things up correctly, we are going to run our project using the Netlify CLI. The Netlify CLI will allow us to "serve" the functions in our `netlify/functions` directory, making it possible to query them for testing purposes. At this point you should be able to run the command:
+To test out that we've wired things up correctly, we are going to run our project using the Netlify CLI. The Netlify CLI will allow us to "serve" the functions in our `netlify/functions` directory, making it possible to interact with them for testing purposes. At this point you should be able to run the command:
 
 ```bash
 netlify dev
 ```
 
-> The Netlify CLI will attempt to automatically detect the framework we are using. In this case, it should automatically detect the Astro framework and its dev script alongside the functions server.
+The Netlify CLI will attempt to automatically detect the framework we are using. In this case, it should automatically detect the Astro framework and its dev script.
 
-This should get you a working local development server in which you can click the button in your `GetTopArtists.jsx` component, and receive some data in the client that looks however you've decided to structure it.
+This should get you a working local development server in which you can click the button rendered by your `GetTopArtists.jsx` component, and receive some data in the client that looks however you've decided to structure it. If you followed my example closely, the data returned from the `getTopArtists.mjs` serverless function should show up in the browser's console.
 
 The command's output should tell you what port you can access your server on. In my case, the output looks like:
 
@@ -276,9 +276,9 @@ warning package.json: No license field
 13:26:25 watching for file changes...
 ```
 
-The `netlify dev` command's output will show your project running on multiple ports. In my case, the address I want to use for testing my application is being served on `http://localhost:54771` – Netlify draws a big box around this address in the output for this command. Your address can and likely will look different!
+The `netlify dev` command's output will show your project running on multiple ports. In my case, the address I want to use for testing my application is being served on `http://localhost:54771` – the Netlify CLI draws a big box around this address in the output for this command. Your address can and likely will look different!
 
-The server Netlify spins up for you will handle proxying requests behind the scenes. It will serve your project as you would expect: navigate to the address it gives you and you should see your user interface/site. Issue requests to the proxy address defined in `netlify.toml` and the server will route the traffic to the serverless function(s) you've defined in your `./netlify/functions` folder.
+The server Netlify spins up for you will handle proxying requests behind the scenes. It will serve your project as you would expect: in your browser, navigate to the address the CLI gives you and you should see your user interface/site. Issue requests to the proxy address defined in `netlify.toml` and the server will route the traffic to the serverless function(s) you've defined in your `netlify/functions` folder.
 
 The docs for Netlify CLI show more of the [available commands](https://docs.netlify.com/api-and-cli-guides/cli-guides/get-started-with-cli/#run-a-local-development-environment) you can use to do things like run your project in different contexts (development, production, etc.), set environment variables from the command line, run your build commands, or even deploy your project directly from the command line.
 
