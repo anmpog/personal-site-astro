@@ -282,9 +282,7 @@ At this point, if we click our "Fetch Data" button, we should see:
    - Data successfully returning from the Spotify API by way of rendered text and images representing the top six artists we've been listening to in the last six months
    - An error occurring by displaying some generic text with a message from our API endpoint
 
-## Next Steps
-
-Across this series, I've explained how to register an application on Spotify's API, authorizing our application using an API client and handling authorization tokens to get access to protected endpoints on Spotify's web API, and how to fetch and render data in our client-side application. I've also detailed the reasoning behind the decisions I made about how this application was built.
+## Further Optimizations
 
 There are some more considerations to make. Right now, our UI does not really reflect a very realistic use-case: we probably want to load our data automatically after the containing page or element is loaded on our site. We likely also want to style the data that comes back from Spotify in a little more aesthetically pleasing manner.
 
@@ -294,10 +292,10 @@ One such optimization would be to take advantage of caching behavior – both in
 
 One thing to be aware of when making caching optimizations is that testing the Netlify-specific caching headers will require you to deploy your application as the Netlify CLI does not give you feedback on how your Netlify-specific cache control headers are working.
 
-In Part 2 of this article series, I discussed the pitfalls of using an in-memory cache with serverless functions to cut down on the need to request access tokens on _every_ request to Spotify. The primary issue is that Netlify functions do not reliably hold state. After a serverless function executes, its execution context persists for a short (but unpredictable) amount of time, meaning that our hypothetical. in-memory cache would be unreliable.
+In Part 2 of this article series, I discussed the pitfalls of using an in-memory cache with serverless functions to cut down on the need to request access tokens on _every_ request to Spotify. The primary issue is that Netlify functions do not reliably hold state. After a serverless function executes, its execution context persists for a short (but unpredictable) amount of time, meaning that our hypothetical in-memory cache would be unreliable.
 
-An optimization that might address the unreliability of serverless functions' short-lived execution contexts would be using [Netlify Blobs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/) in our Netlify functions to achieve caching the access tokens issued by Spotify's auth server. Netlify Blobs provide us a way to persist data in a key/value format that outlasts the lifetime of a serverless function's execution context. This could give us a mechanism for storing access tokens and cutting down on the need to ask Spotify's authorization server for a new access token before every single resource request we make to the Spotify API.
+An optimization that might address the unreliable nature of serverless functions' short-lived execution contexts would be using [Netlify Blobs](https://docs.netlify.com/build/data-and-storage/netlify-blobs/) in our Netlify functions to cache the access tokens issued by Spotify's auth server. Netlify Blobs provide us a way to persist data in a key/value format that outlasts the lifetime of a serverless function's execution context. This could give us a mechanism for storing access tokens and cutting down on the need to ask Spotify's authorization server for a new access token before every single resource request we make to the Spotify API.
 
-On top of those optimizations, I'm sure there are pattern to implement that are more robust, more maintainable, simpler to parse... that's the beauty of coding. There's no such thing as perfect! However, I think I have presented a good, if long-winded, explanation of how to consume this API!
+## Wrapping Up
 
-Stay tuned for future articles!
+Across this series, I've explained how to register an application on Spotify's API, authorizing our application using an API client and handling authorization tokens to get access to protected endpoints on Spotify's web API, and how to fetch and render data in our client-side application. I've also detailed the reasoning behind the decisions I made about how this application was built. At this point, you should have a good idea of how to consume the Spotify web API, and some ideas about how to make further improvements to the serverless function(s) we are using to power this application.
