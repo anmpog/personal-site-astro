@@ -9,11 +9,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/preact": "^4.0.4",
+    "@astrojs/preact": "6.0.1",
     "@astrojs/tailwind": "^6.0.2",
     "@fontsource/merriweather": "^5.1.0",
     "@fontsource/open-sans": "^5.1.0",
-    "astro": "^5.0.8",
+    "astro": "7.0.7",
     "astro-expressive-code": "^0.41.3",
     "astro-icon": "^1.1.5",
     "axios": "^1.7.9",
@@ -23,12 +23,12 @@
     "tailwindcss": "3.4.17"
   },
   "devDependencies": {
-    "@types/lodash.capitalize": "^4.2.9",
     "@iconify-json/ion": "^1.2.2",
+    "@types/lodash.capitalize": "^4.2.9",
     "node-html-parser": "^7.0.1",
     "prettier": "^3.4.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.11"
   },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "packageManager": "yarn@4.17.1"
 }
